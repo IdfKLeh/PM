@@ -1,0 +1,140 @@
+{
+    "events": [
+        {
+            "eventID": "Begger",
+            "conditions": "None",
+            "eventType": "Normal",
+            "eventKarma": "Normal",
+            "basicOptionNumber":2,
+            "dialogues": [
+                {
+                    "restriction":{},
+                    "text": "A smelly old man approaches, asking you for a hug. Will you give him a hug?"
+                },
+                {
+                    "restriction":{
+                        "stats":["intStat"],
+                        "amount":[300]
+                    },
+                    "text":"His toes actually look clean."
+                },
+                {
+                    "restriction":{
+                        "stats":["strStat"],
+                        "amount":[400]
+                    },
+                    "text": "Despite his large figure, he seems to be bearly standing."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction":{},
+                    "text": "Sure, Hug him!",
+                    "action": {
+                        "type": "itemGet",
+                        "item": "golden coin"
+                    },
+                    "afterText": "He was satisfied, gave you a golden coin!",
+                    "afterOptionText": "Yay!"
+                },
+                {
+                    "restriction": {},
+                    "text": "Fuck no.",
+                    "action": {
+                    },
+                    "afterText": "He looked hurt, maybe you should have hugged him after all..",
+                    "afterOptionText": "Who do you think you are?"
+                },
+                {
+                    "restriction": {
+                        "stats": ["strStat"],
+                        "amount": [800]
+                    },
+                    "text": "Rob him!",
+                    "action": {
+                        "type": "statChange",
+                        "stats": ["strStat","intStat"],
+                        "amount":[20,-80]
+                    },
+                    "afterText": "During a short fistfight, the old man lost balance and fell head first on the floor, dying instantly.",
+                    "afterOptionText": "You got stronger, but dumber."
+                }
+            ]
+        },
+        {
+            "eventID": "Bounty",
+            "conditions": "None",
+            "eventType": "Win",
+            "eventKarma":"Good",
+            "basicOptionNumber": 2,
+            "dialogues":[
+                {
+                    "restriction":{},
+                    "text": "Your opponent was actually a criminal with a bounty on his head."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction": {},
+                    "text": "Collect Bounty",
+                    "action": {
+                        "type": "moneyGet",
+                        "amount": [100]
+                    },
+                    "afterText": "You got 100g, which will be used finely.",
+                    "afterOptionText": "Yay!"
+                },
+                {
+                    "restriction":{
+                        "stats":["medStat"],
+                        "amount": [400]
+                    },
+                    "text": "Respectfully refuse",
+                    "action":{
+                        "type": "statChange",
+                        "stats": ["medStat"],
+                        "amount": [10]
+                    },
+                    "afterText": "You feel like a better person.",
+                    "afterOptionText": "Yay!"
+                }
+            ]
+        },
+        {
+            "eventID": "GetPunched",
+            "conditions": "None",
+            "eventType": "Loss",
+            "eventKarma": "Bad",
+            "basicOptionNumber": 2,
+            "dialogues": [
+                {
+                    "restrition":{},
+                    "text": "Your opponent hit you in the face while you were down."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction": {},
+                    "text": "Get hit",
+                    "action": {
+                        "type": "healthChange",
+                        "amount": [5]
+                    },
+                    "afterText": "Ouch.",
+                    "afterOptionText": "Damn."
+                },
+                {
+                    "restriction": {
+                        "stats": ["staStat"],
+                        "amount": [800]
+                    },
+                    "text": "Defend yourself",
+                    "action": {
+                    },
+                    "afterText": "You blocked the shot, barely getting any damage from it.",
+                    "afterOptionText": "Whew."
+                }
+            ]
+        }
+    ]
+}
