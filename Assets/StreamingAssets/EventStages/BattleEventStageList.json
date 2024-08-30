@@ -3,7 +3,7 @@
         {
             "eventID": "Begger",
             "conditions": "None",
-            "eventType": "Normal",
+            "eventType": "Neutral",
             "eventKarma": "Normal",
             "basicOptionNumber":2,
             "dialogues": [
@@ -64,7 +64,7 @@
         {
             "eventID": "Bounty",
             "conditions": "None",
-            "eventType": "Win",
+            "eventType": "Positive",
             "eventKarma":"Good",
             "basicOptionNumber": 2,
             "dialogues":[
@@ -103,7 +103,7 @@
         {
             "eventID": "GetPunched",
             "conditions": "None",
-            "eventType": "Loss",
+            "eventType": "Negative",
             "eventKarma": "Bad",
             "basicOptionNumber": 2,
             "dialogues": [

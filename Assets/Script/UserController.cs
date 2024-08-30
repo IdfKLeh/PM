@@ -136,6 +136,49 @@ public class UserController : MonoBehaviour
         ChangeStat(StaminaCalc(basicTrainingValue)+amount,statType);
     }//stamina 값을 반영해서 스탯을 바꾸는 함수. 그냥 두개 함수를 합친거임.
 
+    public float MeditationCalcPossibility(bool startAtHalf)
+    {
+        int maxMedStat = 1000;
+        int referenceMedStat = 300;
+        int medStat = userData.medStat;
+
+        float minPossibility;
+        float maxPossibility;
+        float refPossibility;
+        
+        // 조건에 따라 가능성 범위를 설정
+        if (startAtHalf)
+        {
+            minPossibility = -0.4f;
+            maxPossibility = 0.3f;
+            refPossibility = 0.0f;
+        }
+        else
+        {
+            minPossibility = 0.05f;
+            maxPossibility = 0.5f;
+            refPossibility = 0.2f;
+        }
+
+        float possibility;
+        if (medStat <= referenceMedStat)
+        {
+            float t = (float)medStat / referenceMedStat;
+            possibility = Mathf.Lerp(minPossibility, refPossibility, t);
+            if (startAtHalf)
+                possibility += 0.5f; // startAtHalf인 경우 0.5 더하기
+        }
+        else
+        {
+            float t = (float)(medStat - referenceMedStat) / (maxMedStat - referenceMedStat);
+            possibility = Mathf.Lerp(refPossibility, maxPossibility, t);
+            if (startAtHalf)
+                possibility += 0.5f; // startAtHalf인 경우 0.5 더하기
+        }
+
+        return possibility;
+    }//medStat에 따라 50프로에서 증감하거나, 0프로에서 시작하는 경우의 확률을 계산하여 반환하는 함수.
+
     public void SetSeed(int seed){
         userData.thisRunSeed = seed;
         SaveData();

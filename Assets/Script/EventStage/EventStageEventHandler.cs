@@ -21,6 +21,12 @@ public class EventStageEventHandler : MonoBehaviour
             case "battle":
                 LoadEventStageEvents("BattleEventStageList.json");
                 break;
+            case "training":
+                LoadEventStageEvents("TrainingEventStageList.json");
+                break;
+            case "boss":
+                LoadEventStageEvents("BossEventStageList.json");
+                break;
             default:
                 LoadEventStageEvents(stageBefore);
                 break;
@@ -61,6 +67,10 @@ public class EventStageEventHandler : MonoBehaviour
         else
         {
             Debug.LogError("Cannot find file"+filePath);
-        }       
+        }
+    }//json에서 이벤트들을 읽어 eventStageEvent에 저장함.
+
+    void SetEvent(int stage){
+        
     }
 }
