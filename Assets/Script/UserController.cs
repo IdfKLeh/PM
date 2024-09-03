@@ -11,9 +11,6 @@ public class UserController : MonoBehaviour
     UserData userData = new UserData();
     private string saveDataPath;
     private string saveDataDirectoryPath;
-    private int basicTrainingValue = 8;
-    private int mainStatAdditionalValue = 4;
-    private int subStatAdditionalValue =2;
     
     void Awake()
     {
@@ -92,8 +89,6 @@ public class UserController : MonoBehaviour
     }//특정 수치를 올리거나 감소시키는 함수. 여기에 메인 스탯일시 추가로 더 성장시키는 기능 넣어야 함.
 
     private int StaminaCalc(int amount){
-        int maxStaStat = 1000;
-        int referenceStaStat = 300;
 
         float minMultiplier = 0.1f;
         float maxMultiplier = 2.0f;
@@ -103,16 +98,16 @@ public class UserController : MonoBehaviour
 
         // staStat이 기준값 이하일 때와 이상일 때를 나누어 처리
         float multiplier;
-        if (staStat <= referenceStaStat)
+        if (staStat <= GameBalance.referenceStaStat)
         {
             // 기준값 이하일 때 비례적으로 감소
-            float t = (float)staStat / referenceStaStat;
+            float t = (float)staStat / GameBalance.referenceStaStat;
             multiplier = Mathf.Lerp(minMultiplier, referenceMultiplier, t);
         }
         else
         {
             // 기준값 이상일 때 비례적으로 증가
-            float t = (float)(staStat - referenceStaStat) / (maxStaStat - referenceStaStat);
+            float t = (float)(staStat - GameBalance.referenceStaStat) / (GameBalance.maxStaStat - GameBalance.referenceStaStat);
             multiplier = Mathf.Lerp(referenceMultiplier, maxMultiplier, t);
         }
 
@@ -127,19 +122,17 @@ public class UserController : MonoBehaviour
         int amount = 0;
         if (statType == userData.mainStat)
         {
-            amount += mainStatAdditionalValue;
+            amount += GameBalance.mainStatAdditionalValue;
         }   
         else if (statType == userData.subStat)
         {
-            amount += subStatAdditionalValue;
+            amount += GameBalance.subStatAdditionalValue;
         }
-        ChangeStat(StaminaCalc(basicTrainingValue)+amount,statType);
+        ChangeStat(StaminaCalc(GameBalance.basicTrainingValue)+amount,statType);
     }//stamina 값을 반영해서 스탯을 바꾸는 함수. 그냥 두개 함수를 합친거임.
 
     public float MeditationCalcPossibility(bool startAtHalf)
     {
-        int maxMedStat = 1000;
-        int referenceMedStat = 300;
         int medStat = userData.medStat;
 
         float minPossibility;
@@ -161,16 +154,16 @@ public class UserController : MonoBehaviour
         }
 
         float possibility;
-        if (medStat <= referenceMedStat)
+        if (medStat <= GameBalance.referenceMedStat)
         {
-            float t = (float)medStat / referenceMedStat;
+            float t = (float)medStat / GameBalance.referenceMedStat;
             possibility = Mathf.Lerp(minPossibility, refPossibility, t);
             if (startAtHalf)
                 possibility += 0.5f; // startAtHalf인 경우 0.5 더하기
         }
         else
         {
-            float t = (float)(medStat - referenceMedStat) / (maxMedStat - referenceMedStat);
+            float t = (float)(medStat - GameBalance.referenceMedStat) / (GameBalance.maxMedStat - GameBalance.referenceMedStat);
             possibility = Mathf.Lerp(refPossibility, maxPossibility, t);
             if (startAtHalf)
                 possibility += 0.5f; // startAtHalf인 경우 0.5 더하기
@@ -190,12 +183,12 @@ public class UserController : MonoBehaviour
 
     public void SetMainStat(string pickedStat){
         userData.mainStat = pickedStat;
-        ChangeStat(100, pickedStat);
+        ChangeStat(GameBalance.mainStatExtraValue, pickedStat);
     }//고른 특성을 메인으로 설정하는 함수
 
     public void SetSubStat(string pickedStat){
         userData.subStat = pickedStat;
-        ChangeStat(50, pickedStat);
+        ChangeStat(GameBalance.subStatExtraValue, pickedStat);
     }//고른 특성을 서브로 설정하는 함수
 
 }
