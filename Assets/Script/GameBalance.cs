@@ -15,9 +15,11 @@ public static class GameBalance//게임의 밸런스에 영향을 주는 수들�
     //최대 stat과 관련된 값
     public static int maxStaStat = 1000;
     public static int maxMedStat = 1000;
+    public static int maxSpeStat = 1000;
 
     //함수에서 사용되는 middle 과 관련된 값
     public static int referenceStaStat = 300;
     public static int referenceMedStat = 300;
+    public static int referenceSpeStat = 300;
     
 }

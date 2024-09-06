@@ -131,13 +131,34 @@ public class UserController : MonoBehaviour
         ChangeStat(StaminaCalc(GameBalance.basicTrainingValue)+amount,statType);
     }//stamina 값을 반영해서 스탯을 바꾸는 함수. 그냥 두개 함수를 합친거임.
 
-    public float MeditationCalcPossibility(bool startAtHalf)
+    public float PossibilityCalc(string statType, bool startAtHalf)
     {
-        int medStat = userData.medStat;
+        int stat = 0;
+        int referenceStat = 300;
+        int maxStat = 1000;
 
         float minPossibility;
         float maxPossibility;
         float refPossibility;
+
+        switch(statType)
+        {
+            case "medStat":
+                stat = userData.medStat;
+                referenceStat = GameBalance.referenceMedStat;
+                maxStat = GameBalance.maxMedStat;
+                break;
+            case "speStat":
+                stat = userData.speStat;
+                referenceStat = GameBalance.referenceSpeStat;
+                maxStat = GameBalance.maxSpeStat;
+                break;
+            default:
+                stat = userData.medStat;
+                referenceStat = GameBalance.referenceMedStat;
+                maxStat = GameBalance.maxMedStat;
+                break;
+        }
         
         // 조건에 따라 가능성 범위를 설정
         if (startAtHalf)
@@ -154,19 +175,19 @@ public class UserController : MonoBehaviour
         }
 
         float possibility;
-        if (medStat <= GameBalance.referenceMedStat)
+        if (stat <= referenceStat)
         {
-            float t = (float)medStat / GameBalance.referenceMedStat;
+            float t = (float)stat / referenceStat;
             possibility = Mathf.Lerp(minPossibility, refPossibility, t);
             if (startAtHalf)
                 possibility += 0.5f; // startAtHalf인 경우 0.5 더하기
         }
         else
         {
-            float t = (float)(medStat - GameBalance.referenceMedStat) / (GameBalance.maxMedStat - GameBalance.referenceMedStat);
+            float t = (float)(stat - referenceStat) / (maxStat - referenceStat);
             possibility = Mathf.Lerp(refPossibility, maxPossibility, t);
             if (startAtHalf)
-                possibility += 0.5f; // startAtHalf인 경우 0.5 더하기
+                possibility += 0.5f; // startAtHalf인 경우 0.5 더하기 *후에 
         }
 
         return possibility;

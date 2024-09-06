@@ -11,20 +11,22 @@ public class EventStageEventHandler : MonoBehaviour
     private EventStageEvent currentEvent;
     private UserController userController;
     private string stageBefore;
+    private string stageBeforeType;
     
     void Awake()
     {
         userController = FindObjectOfType<UserController>();
-        stageBefore = PlayerPrefs.GetString("stageBefore", "normal");
+        stageBefore = PlayerPrefs.GetString("stageBefore", "Normal");
+        stageBeforeType = PlayerPrefs.GetString("stageBeforeType", "Neutral");
         switch (stageBefore)
         {
-            case "battle":
+            case "Battle":
                 LoadEventStageEvents("BattleEventStageList.json");
                 break;
-            case "training":
+            case "Training":
                 LoadEventStageEvents("TrainingEventStageList.json");
                 break;
-            case "boss":
+            case "Boss":
                 LoadEventStageEvents("BossEventStageList.json");
                 break;
             default:
@@ -71,6 +73,56 @@ public class EventStageEventHandler : MonoBehaviour
     }//json에서 이벤트들을 읽어 eventStageEvent에 저장함.
 
     void SetEvent(int stage){
+        string karma = SetKarma("medStat", false);
         
+        List<EventStageEvent> events = GetEventsByTypeAndKarma(stageBeforeType,karma);
+        //아직 이 이후를 안짰음. startEventHandler코드 참조.
     }
+
+    List<EventStageEvent> GetEventsByTypeAndKarma(string type, string karma){
+        if (eventStageEvent == null)
+        {
+            Debug.LogError("eventStageEvent list is null.");
+            return null;
+        }
+        Debug.Log("Finding events for stage: " + type);
+        List<EventStageEvent> eventsForType = new List<EventStageEvent>();
+
+        foreach(EventStageEvent e in eventStageEvent)
+        {
+            if (e == null)
+            {
+                Debug.LogWarning("Encountered a null StartEvent object.");
+                continue;
+            }
+
+            if (e.eventType == type && e.eventKarma == karma)
+            {
+                eventsForType.Add(e);
+            }
+        }
+        return eventsForType;
+    }//type(전 이벤트가 승리인지 패배인지)와 karma(medStat등의 스탯에 따라 운으로 정해지는 값)에 따라 이벤트들을 걸러내는 함수
+
+    string SetKarma(string statType, bool startAtHalf){
+        if(GameFunctions.IsSuccessful(userController.PossibilityCalc(statType,startAtHalf)))
+        {
+            if(GameFunctions.IsSuccessful(userController.PossibilityCalc(statType,startAtHalf))){
+                return "Good";
+            }
+            else
+            {
+                return "Normal";
+            }
+        }
+        else
+        {
+            if(GameFunctions.IsSuccessful(userController.PossibilityCalc(statType,startAtHalf))){
+                return "Normal";
+            }
+            else{
+                return "Bad";
+            }
+        }
+    }//카르마 값을 세개의 선택지(Good, Normal, Bad) 중에 뽑아서 반환하는 함수
 }
