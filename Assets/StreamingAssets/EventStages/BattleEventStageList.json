@@ -8,27 +8,27 @@
             "basicOptionNumber":2,
             "dialogues": [
                 {
-                    "restriction":{},
+                    "restriction":[{}],
                     "text": "A smelly old man approaches, asking you for a hug. Will you give him a hug?"
                 },
                 {
-                    "restriction":{
-                        "stats":["intStat"],
-                        "amount":[300]
-                    },
+                    "restriction":[{
+                        "stats":"intStat",
+                        "amount":300
+                    }],
                     "text":"His toes actually look clean."
                 },
                 {
-                    "restriction":{
-                        "stats":["strStat"],
-                        "amount":[400]
-                    },
+                    "restriction":[{
+                        "stats":"strStat",
+                        "amount":400
+                    }],
                     "text": "Despite his large figure, he seems to be bearly standing."
                 }
             ],
             "allOptions": [
                 {
-                    "restriction":{},
+                    "restriction":[{}],
                     "text": "Sure, Hug him!",
                     "action": {
                         "type": "itemGet",
@@ -38,7 +38,7 @@
                     "afterOptionText": "Yay!"
                 },
                 {
-                    "restriction": {},
+                    "restriction":[{}],
                     "text": "Fuck no.",
                     "action": {
                     },
@@ -46,10 +46,10 @@
                     "afterOptionText": "Who do you think you are?"
                 },
                 {
-                    "restriction": {
-                        "stats": ["strStat"],
-                        "amount": [800]
-                    },
+                    "restriction": [{
+                        "stats": "strStat",
+                        "amount": 800
+                    }],
                     "text": "Rob him!",
                     "action": {
                         "type": "statChange",
@@ -69,13 +69,13 @@
             "basicOptionNumber": 2,
             "dialogues":[
                 {
-                    "restriction":{},
+                    "restriction":[{}],
                     "text": "Your opponent was actually a criminal with a bounty on his head."
                 }
             ],
             "allOptions": [
                 {
-                    "restriction": {},
+                    "restriction": [{}],
                     "text": "Collect Bounty",
                     "action": {
                         "type": "moneyGet",
@@ -85,10 +85,10 @@
                     "afterOptionText": "Yay!"
                 },
                 {
-                    "restriction":{
-                        "stats":["medStat"],
-                        "amount": [400]
-                    },
+                    "restriction":[{
+                        "stats":"medStat",
+                        "amount": 400
+                    }],
                     "text": "Respectfully refuse",
                     "action":{
                         "type": "statChange",
@@ -108,13 +108,13 @@
             "basicOptionNumber": 2,
             "dialogues": [
                 {
-                    "restrition":{},
+                    "restrition":[{}],
                     "text": "Your opponent hit you in the face while you were down."
                 }
             ],
             "allOptions": [
                 {
-                    "restriction": {},
+                    "restriction": [{}],
                     "text": "Get hit",
                     "action": {
                         "type": "healthChange",
@@ -124,10 +124,10 @@
                     "afterOptionText": "Damn."
                 },
                 {
-                    "restriction": {
-                        "stats": ["staStat"],
-                        "amount": [800]
-                    },
+                    "restriction": [{
+                        "stats": "staStat",
+                        "amount": 800
+                    }],
                     "text": "Defend yourself",
                     "action": {
                     },

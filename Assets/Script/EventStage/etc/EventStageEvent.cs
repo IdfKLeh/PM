@@ -20,12 +20,12 @@ namespace EventStageEventNameSpace
     public class Dialogue
     {
         public string text { get; set; }
-        public Restriction restriction { get; set; }
+        public List<Restriction> restriction { get; set; }
     }
 
     public class Option
     {
-        public Restriction restriction { get; set; }
+        public List<Restriction> restriction { get; set; }
         public string text { get; set; }
         public Action action { get; set; }
         public string afterText { get; set; }
@@ -34,8 +34,8 @@ namespace EventStageEventNameSpace
 
     public class Restriction
     {
-        public List<string> stats { get; set; }
-        public List<int> amount { get; set; }  
+        public string stats { get; set; }
+        public int amount { get; set; }  
     }
 
     public class Action

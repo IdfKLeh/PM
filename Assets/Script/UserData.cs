@@ -69,4 +69,18 @@ public class UserData
         set{SubStat = value;}
     }
 
+    [SerializeField]
+    private StageInfo StageBeforeInfo; // 이전 스테이지 정보
+    public StageInfo stageBeforeInfo
+    {
+        get { return StageBeforeInfo; }
+        set { StageBeforeInfo = value; }
+    }
+}
+
+[System.Serializable]
+public struct StageInfo
+{
+    public string stageKind; // 스테이지 종류
+    public string stageType; // 스테이지 결과 (예: 승리, 패배 등)
 }

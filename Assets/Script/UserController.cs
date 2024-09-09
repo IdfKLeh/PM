@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using EventStageEventNameSpace;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
@@ -211,5 +212,65 @@ public class UserController : MonoBehaviour
         userData.subStat = pickedStat;
         ChangeStat(GameBalance.subStatExtraValue, pickedStat);
     }//고른 특성을 서브로 설정하는 함수
+
+    public void SetStageBefore(string stageKindInput, string stageTypeInput)
+    {
+        userData.stageBeforeInfo = new StageInfo{stageKind = stageKindInput, stageType = stageTypeInput};
+        SaveData();
+    }//이전 스테이지의 정보를 저장. 보통 각 스테이지가 끝날때 호출 될 예정
+
+    public StageInfo GetStageBefore()
+    {
+        return userData.stageBeforeInfo;
+    }//이전 스테이지의 정보를 반환
+
+    public string GetKarma(string statType, bool startAtHalf){
+        if(GameFunctions.IsSuccessful(PossibilityCalc(statType,startAtHalf)))
+        {
+            if(GameFunctions.IsSuccessful(PossibilityCalc(statType,startAtHalf))){
+                return "Good";
+            }
+            else
+            {
+                return "Normal";
+            }
+        }
+        else
+        {
+            if(GameFunctions.IsSuccessful(PossibilityCalc(statType,startAtHalf))){
+                return "Normal";
+            }
+            else{
+                return "Bad";
+            }
+        }
+    }//카르마 값을 세개의 선택지(Good, Normal, Bad) 중에 뽑아서 반환하는 함수
+
+    public bool IsRestrictionPassed(Restriction restriction){
+
+        if (restriction == null || string.IsNullOrEmpty(restriction.stats)) 
+        {
+            Debug.LogError("Restriction or restriction.stats is null or empty.");
+            return false;
+        }
+        switch(restriction.stats)
+        {
+            case "phyStat":
+                return(userData.phyStat >= restriction.amount);
+            case "intStat":
+                return(userData.intStat >= restriction.amount);
+            case "staStat":
+                return(userData.staStat >= restriction.amount);
+            case "medStat":
+                return(userData.medStat >= restriction.amount);
+            case "speStat":
+                return(userData.speStat >= restriction.amount);
+            case "weaStat":
+                return(userData.weaStat >= restriction.amount);
+            default:
+                Debug.LogError("Unknown Stat Name"+restriction.stats);
+                return false;
+        }
+    }//restriction이 통과했는지 확인하는 함수.
 
 }
