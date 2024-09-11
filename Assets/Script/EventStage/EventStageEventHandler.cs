@@ -5,6 +5,7 @@ using EventStageEventNameSpace;
 using System.IO;
 using Newtonsoft.Json;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 
 public class EventStageEventHandler : MonoBehaviour
@@ -14,6 +15,7 @@ public class EventStageEventHandler : MonoBehaviour
     private UserController userController;
     private StageInfo stageBefore;//이전 스테이지의 정보를 저장하는 변수
     public List<int> passedOptionIndexes = new List<int>();//옵션 중 무엇이 표시되는지 번호를 저장해놓는 리스트
+    private string targetAfterStage; //보통의 경우 MainPlay로 가야하지만 보스 스테이지 등의 특수 상황의 경우 어디로 갈지 목적지를 적어두는 변수
     void Awake()
     {
         userController = FindObjectOfType<UserController>();
@@ -133,10 +135,19 @@ public class EventStageEventHandler : MonoBehaviour
     }//type(전 이벤트가 승리인지 패배인지)와 karma(medStat등의 스탯에 따라 운으로 정해지는 값)에 따라 이벤트들을 걸러내는 함수
 
     public string GetEventDialogue(){
-        StringBuilder completedDialogue = new StringBuilder();
+        
         if(currentEvent != null)
         {
-            foreach(Dialogue e in currentEvent.dialogues){
+            return DialogueExtractor(currentEvent.dialogues);
+        }
+        return null;
+    }//이벤트 시작시 첫 dialogue를 반환하는 함수
+    
+    public string DialogueExtractor(List<Dialogue> dialogues){
+
+        StringBuilder completedDialogue = new StringBuilder();
+
+        foreach(Dialogue e in dialogues){
                 bool allRestrictionsPassed = true; // 모든 restriction이 통과했는지 확인하는 플래그
 
                 foreach(Restriction a in e.restriction)
@@ -155,10 +166,8 @@ public class EventStageEventHandler : MonoBehaviour
                 }  
             }
             return completedDialogue.ToString();
-        }
-        return null;
     }//각 dialogue를 추가하기 전에 restriction을 체크하여 통과했을시에만 표시할 string에 추가하는 함수
-    
+
     public int VisibleOptionCount(){
 
         passedOptionIndexes.Clear();
@@ -215,4 +224,34 @@ public class EventStageEventHandler : MonoBehaviour
         }
         
     }
+
+    public string GetEventAfterDialogue(int selectedOptionIndex){
+        int realOptionIndex = passedOptionIndexes[selectedOptionIndex];
+
+        return DialogueExtractor(currentEvent.allOptions[realOptionIndex].afterText);
+    }//이벤트에서 옵션 선택 후 나오는 dialogue를 반환하는 함수
+
+    public string GetAfterOptionText(int selectedOptionIndex){
+        return currentEvent.allOptions[passedOptionIndexes[selectedOptionIndex]].afterOptionText;
+    }//afterOptionText, 즉 선택후 아래 버튼에 나오는 텍스트 반환하는 함수. 코드가 거지같아 보이지만 사실 최선임. 굳이 메모리 할당하기 싫었고, 위의 옵션text반환 함수랑 합쳐볼까 했는데 비효율적.
+
+    public void ChangeStage(){
+
+        switch(targetAfterStage)
+        {
+            case "MainPlay":
+                SceneChange("MainPlay");
+                break;
+            case "Battle":
+                break;
+            default:
+                SceneChange("MainPlay");
+                break;
+        }
+    }//다음 스테이지가 뭔지 확인하고 바꿔주는 함수
+
+    private void SceneChange(string stageName){
+        userController.SaveData();
+        SceneManager.LoadScene(stageName);
+    }//다음 스테이지를 전달받아 정보 저장후 그걸로 바꿔주는 함수.
 }

@@ -28,7 +28,7 @@ namespace EventStageEventNameSpace
         public List<Restriction> restriction { get; set; }
         public string text { get; set; }
         public List<Action> action { get; set; }
-        public string afterText { get; set; }
+        public List<Dialogue> afterText { get; set; }
         public string afterOptionText { get; set; }
     }
 

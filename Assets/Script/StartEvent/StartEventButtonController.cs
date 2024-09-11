@@ -110,7 +110,7 @@ public class StartEventButtonController : MonoBehaviour
         if(isThisLastEvent)
         {
             Debug.Log("This is the final event!");
-            sceneChange("MainPlay");
+            SceneChange("MainPlay");
         }
         else
         {
@@ -138,7 +138,7 @@ public class StartEventButtonController : MonoBehaviour
         Debug.Log("no clicked");
     }//popup의 no가 눌렸을 때
 
-    public void sceneChange(string targetLevel)//function for Scene Change through button clicks
+    private void SceneChange(string targetLevel)//function for Scene Change through button clicks
     {
         SceneManager.LoadScene(targetLevel);
     }

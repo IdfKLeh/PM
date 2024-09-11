@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -62,7 +63,7 @@ public class EventStageButtonController : MonoBehaviour
             int index = i; // Capture index for closure
             buttons[i].onClick.RemoveAllListeners(); // Clear previous listeners
             buttons[i].onClick.AddListener(() => OnOptionSelection(index, numberOfOptions));
-        }//지금 여기까지 했고 옵션 눌렀을때 행동 실행하는 리스너 넣어야 함.
+        }
     }//option 버튼들을 활성화 하는 함수.
 
     private void OnOptionSelection(int optionNumber, int numberOfOptions){
@@ -77,15 +78,27 @@ public class EventStageButtonController : MonoBehaviour
                 eventStageCanvas.twoButtonGroup.SetActive(false);
                 break;
             case 3:
-                eventStageCanvas.oneButtonGroup.SetActive(false);
+                eventStageCanvas.threeButtonGroup.SetActive(false);
                 break;
             case 4:
-                eventStageCanvas.oneButtonGroup.SetActive(false);
+                eventStageCanvas.fourButtonGroup.SetActive(false);
                 break;
             default:
                 Debug.Log("Dont know how many options are here");
                 break;
         }
-        //지금 왜인지 모르겠는데 선택했을때 버튼이 안사라짐. 수정해야함.
-    }//옵션 선택시 버튼들을 모두 없애고 하나만 새로 생성, Dialogue와 button에 새로운 텍스트 적용.
+        DisplayAfterEvent(optionNumber);
+
+    }//옵션 선택시 버튼들을 모두 없애고 이벤트 이후 텍스트 불러옴.
+
+    private void DisplayAfterEvent(int optionNumber){
+        SetEventText(eventStageEventHandler.GetEventAfterDialogue(optionNumber));
+
+        eventStageCanvas.oneButtonGroup.SetActive(true);
+        eventStageCanvas.oneButtonGroup.GetComponentInChildren<TextMeshProUGUI>().text = eventStageEventHandler.GetAfterOptionText(optionNumber); 
+
+        eventStageCanvas.oneButtonGroup.GetComponentInChildren<Button>().onClick.RemoveAllListeners();
+        eventStageCanvas.oneButtonGroup.GetComponentInChildren<Button>().onClick.AddListener(() => eventStageEventHandler.ChangeStage());
+    }//옵션 선택 후에 나타나는 텍스트 설정 함수
 }
+//일단은 대강 된듯... 전투 씬 만들러가자..

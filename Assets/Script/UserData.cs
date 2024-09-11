@@ -76,6 +76,22 @@ public class UserData
         get { return StageBeforeInfo; }
         set { StageBeforeInfo = value; }
     }
+
+    [SerializeField]
+    private int StageCounter;
+    public int stageCounter
+    {
+        get { return StageCounter; }
+        set { StageCounter = value; }
+    }
+
+    [SerializeField]
+    private int MainWeapon;
+    public int mainWeapon
+    {
+        get { return MainWeapon; }
+        set { MainWeapon = value; }
+    }
 }
 
 [System.Serializable]

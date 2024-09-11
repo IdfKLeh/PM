@@ -88,8 +88,8 @@ public class UserController : MonoBehaviour
         }
         Debug.Log("trait up = " + statType + ", amount = " + amount);
         Debug.Log("traits current value = "+userData.phyStat+" "+userData.intStat+" "+userData.staStat+" "+userData.medStat+" "+userData.speStat+" "+userData.weaStat);
-    }//특정 수치를 올리거나 감소시키는 함수. 여기에 메인 스탯일시 추가로 더 성장시키는 기능 넣어야 함.
-
+        SaveData();
+    }//특정 수치를 올리거나 감소시키는 함수.
     private int StaminaCalc(int amount){
 
         float minMultiplier = 0.1f;
@@ -131,7 +131,7 @@ public class UserController : MonoBehaviour
             amount += GameBalance.subStatAdditionalValue;
         }
         ChangeStat(StaminaCalc(GameBalance.basicTrainingValue)+amount,statType);
-    }//stamina 값을 반영해서 스탯을 바꾸는 함수. 그냥 두개 함수를 합친거임.
+    }//training 상황에서 stamina 값을 반영해서 스탯을 바꾸는 함수. 그냥 두개 함수를 합친거임.
 
     public float PossibilityCalc(string statType, bool startAtHalf)
     {
@@ -277,4 +277,15 @@ public class UserController : MonoBehaviour
         }
     }//restriction이 통과했는지 확인하는 함수.
 
+    public void SetStageCounter(int num){
+        userData.stageCounter = num;
+    }
+
+    public void AddStageCounter(){
+        userData.stageCounter += 1;
+    }
+
+    public int GetStageCounter(){
+        return userData.stageCounter;
+    }//위의 세개는 차례대로 stageCounter값을 특정 수로 설정하고, 1만 더하고, 반환하는 함수
 }

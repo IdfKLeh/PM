@@ -34,7 +34,10 @@
                         "type": "itemGet",
                         "item": "golden coin"
                     }],
-                    "afterText": "He was satisfied, gave you a golden coin!",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "He was satisfied, gave you a golden coin!"
+                    }],
                     "afterOptionText": "Yay!"
                 },
                 {
@@ -42,7 +45,10 @@
                     "text": "Fuck no.",
                     "action": [{
                     }],
-                    "afterText": "He looked hurt, maybe you should have hugged him after all..",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "He looked hurt, maybe you should have hugged him after all.."
+                    }],
                     "afterOptionText": "Who do you think you are?"
                 },
                 {
@@ -61,7 +67,10 @@
                         "stats": "intStat",
                         "amount":-80 
                     }],
-                    "afterText": "During a short fistfight, the old man lost balance and fell head first on the floor, dying instantly.",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "During a short fistfight, the old man lost balance and fell head first on the floor, dying instantly."
+                    }],
                     "afterOptionText": "You got stronger, but dumber."
                 }
             ]
@@ -100,7 +109,10 @@
                         "type": "itemGet",
                         "item": "golden coin"
                     }],
-                    "afterText": "He was satisfied, gave you a golden coin!",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "He was satisfied, gave you a golden coin!"
+                    }],
                     "afterOptionText": "Yay!"
                 },
                 {
@@ -108,7 +120,10 @@
                     "text": "Fuck no.",
                     "action": [{
                     }],
-                    "afterText": "He looked hurt, maybe you should have hugged him after all..",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "He looked hurt, maybe you should have hugged him after all.."
+                    }],
                     "afterOptionText": "Who do you think you are?"
                 },
                 {
@@ -127,7 +142,10 @@
                         "stats": "intStat",
                         "amount":-80 
                     }],
-                    "afterText": "During a short fistfight, the old man lost balance and fell head first on the floor, dying instantly.",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "During a short fistfight, the old man lost balance and fell head first on the floor, dying instantly."
+                    }], 
                     "afterOptionText": "You got stronger, but dumber."
                 },
                 {
@@ -138,7 +156,10 @@
                     "text": "Defend yourself",
                     "action": [{
                     }],
-                    "afterText": "You blocked the shot, barely getting any damage from it.",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You blocked the shot, barely getting any damage from it."
+                    }], 
                     "afterOptionText": "Whew."
                 }
             ]
@@ -163,7 +184,10 @@
                         "type": "moneyGet",
                         "amount": 100
                     }],
-                    "afterText": "You got 100g, which will be used finely.",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You got 100g, which will be used finely."
+                    }], 
                     "afterOptionText": "Yay!"
                 },
                 {
@@ -177,7 +201,10 @@
                         "stats": "medStat",
                         "amount": 10
                     }],
-                    "afterText": "You feel like a better person.",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You feel like a better person."
+                    }], 
                     "afterOptionText": "Yay!"
                 }
             ]
@@ -202,7 +229,10 @@
                         "type": "healthChange",
                         "amount": -5
                     }],
-                    "afterText": "Ouch.",
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "Ouch."
+                    }], 
                     "afterOptionText": "Damn."
                 },
                 {
@@ -211,9 +241,11 @@
                         "amount": 800
                     }],
                     "text": "Defend yourself",
-                    "action": [{
-                    }],
-                    "afterText": "You blocked the shot, barely getting any damage from it.",
+                    "action": [{}],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text":  "You blocked the shot, barely getting any damage from it."
+                    }], 
                     "afterOptionText": "Whew."
                 }
             ]
