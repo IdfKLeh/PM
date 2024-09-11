@@ -12,15 +12,13 @@ public class EventStageEventHandler : MonoBehaviour
     public List<EventStageEvent> eventStageEvent= new List<EventStageEvent>();
     private EventStageEvent currentEvent;
     private UserController userController;
-    private string stageBefore;
-    private string stageBeforeType;
-    
+    private StageInfo stageBefore;//이전 스테이지의 정보를 저장하는 변수
+    public List<int> passedOptionIndexes = new List<int>();//옵션 중 무엇이 표시되는지 번호를 저장해놓는 리스트
     void Awake()
     {
         userController = FindObjectOfType<UserController>();
-        stageBefore = PlayerPrefs.GetString("stageBefore", "Normal");
-        stageBeforeType = PlayerPrefs.GetString("stageBeforeType", "Neutral");
-        switch (stageBefore)
+        stageBefore = userController.GetStageBefore();
+        switch (stageBefore.stageKind)
         {
             case "Battle":
                 LoadEventStageEvents("BattleEventStageList.json");
@@ -32,10 +30,10 @@ public class EventStageEventHandler : MonoBehaviour
                 LoadEventStageEvents("BossEventStageList.json");
                 break;
             default:
-                LoadEventStageEvents(stageBefore);
+                LoadEventStageEvents(stageBefore.stageKind);
                 break;
         }
-        SetEvent(stageBeforeType);
+        SetEvent(stageBefore.stageType);
     }//시작 설정과 마지막 스테이지의 정보를 가져옴(전투, 훈련, 보스 등). 해당 정보에 따라 필요한 스테이지 로드
 
     void LoadEventStageEvents(string fileName)
@@ -105,6 +103,7 @@ public class EventStageEventHandler : MonoBehaviour
     }//주어진 이벤트 수 중에서 랜덤한 번호 출력
 
     List<EventStageEvent> GetEventsByTypeAndKarma(string type, string karma){
+        Debug.Log("Setting event for type: "+ type+ ", and karma: "+ karma);
         if (eventStageEvent == null)
         {
             Debug.LogError("eventStageEvent list is null.");
@@ -162,12 +161,15 @@ public class EventStageEventHandler : MonoBehaviour
     
     public int VisibleOptionCount(){
 
+        passedOptionIndexes.Clear();
+
         int optionCount = 0;
         if(currentEvent == null){
             Debug.LogError("The gameEvent is null.");
             return 0;
         }
-        foreach(Option e in currentEvent.allOptions){
+        for(int i = 0; i < currentEvent.allOptions.Count; i++){
+            Option e = currentEvent.allOptions[i];
             bool allRestrictionsPassed = true; // 모든 restriction이 통과했는지 확인하는 플래그
 
             foreach(Restriction a in e.restriction)
@@ -181,8 +183,36 @@ public class EventStageEventHandler : MonoBehaviour
             if (allRestrictionsPassed)
             {
                 optionCount += 1;
+                passedOptionIndexes.Add(i);
             }
         }
         return optionCount;
+    }//유저가 볼 수 있는 옵션을 세고, 어떤 옵션들이 들어갈 것인지 index를 기록해놓는 함수
+
+    public string GetOptionText(int optionIndex, int numberOfOptions){
+            return currentEvent.allOptions[passedOptionIndexes[optionIndex]].text;
+    }
+
+    public void ExecuteAction(int selectedOptionIndex){
+        int realOptionIndex = passedOptionIndexes[selectedOptionIndex];
+
+        foreach(Action e in currentEvent.allOptions[realOptionIndex].action){
+            switch(e.type)
+            {
+                case "statChange":
+                    userController.ChangeStat(e.amount,e.stats);
+                    break;
+                case "itemGet":
+                    break;
+                case "healthChange":
+                    break;
+                case "moneyChange":
+                    break;
+                default:
+                    Debug.Log("Unknown type of action"+e.type);
+                    break;
+            }
+        }
+        
     }
 }

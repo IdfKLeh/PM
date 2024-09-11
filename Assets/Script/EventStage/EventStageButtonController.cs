@@ -30,18 +30,22 @@ public class EventStageButtonController : MonoBehaviour
         switch (numberOfOptions)
         {
             case 1:
+                eventStageCanvas.oneButtonGroup.SetActive(true);
                 buttons.AddRange(eventStageCanvas.oneButtonGroup.GetComponentsInChildren<Button>());
                 buttonTexts.AddRange(eventStageCanvas.oneButtonGroup.GetComponentsInChildren<TextMeshProUGUI>());
                 break;
             case 2:
+                eventStageCanvas.twoButtonGroup.SetActive(true);
                 buttons.AddRange(eventStageCanvas.twoButtonGroup.GetComponentsInChildren<Button>());
                 buttonTexts.AddRange(eventStageCanvas.twoButtonGroup.GetComponentsInChildren<TextMeshProUGUI>());
                 break;
             case 3:
+                eventStageCanvas.threeButtonGroup.SetActive(true);
                 buttons.AddRange(eventStageCanvas.threeButtonGroup.GetComponentsInChildren<Button>());
                 buttonTexts.AddRange(eventStageCanvas.threeButtonGroup.GetComponentsInChildren<TextMeshProUGUI>());
                 break;
             case 4:
+                eventStageCanvas.fourButtonGroup.SetActive(true);
                 buttons.AddRange(eventStageCanvas.fourButtonGroup.GetComponentsInChildren<Button>());
                 buttonTexts.AddRange(eventStageCanvas.fourButtonGroup.GetComponentsInChildren<TextMeshProUGUI>());
                 break;
@@ -49,14 +53,39 @@ public class EventStageButtonController : MonoBehaviour
                 Debug.Log("cant find options");
                 break;
         }
+        Debug.Log("buttonTexts count: " + buttonTexts.Count);
 
-        for (int i = 0; i < buttons.Count; i++)
+        for (int i = 0; i < numberOfOptions; i++)
         {
-            buttons[i].gameObject.SetActive(true);
-            //buttonTexts[i].text = eventStageEventHandler.GetOptionDialogue(i);
+            Debug.Log("i = "+i);
+            buttonTexts[i].text = eventStageEventHandler.GetOptionText(i,numberOfOptions);
             int index = i; // Capture index for closure
             buttons[i].onClick.RemoveAllListeners(); // Clear previous listeners
-            //buttons[i].onClick.AddListener(() => OnOptionSelection(index, numberOfOptions));
-        }
+            buttons[i].onClick.AddListener(() => OnOptionSelection(index, numberOfOptions));
+        }//지금 여기까지 했고 옵션 눌렀을때 행동 실행하는 리스너 넣어야 함.
     }//option 버튼들을 활성화 하는 함수.
+
+    private void OnOptionSelection(int optionNumber, int numberOfOptions){
+        eventStageEventHandler.ExecuteAction(optionNumber);
+
+        switch(numberOfOptions)
+        {
+            case 1:
+                eventStageCanvas.oneButtonGroup.SetActive(false);
+                break;
+            case 2:
+                eventStageCanvas.twoButtonGroup.SetActive(false);
+                break;
+            case 3:
+                eventStageCanvas.oneButtonGroup.SetActive(false);
+                break;
+            case 4:
+                eventStageCanvas.oneButtonGroup.SetActive(false);
+                break;
+            default:
+                Debug.Log("Dont know how many options are here");
+                break;
+        }
+        //지금 왜인지 모르겠는데 선택했을때 버튼이 안사라짐. 수정해야함.
+    }//옵션 선택시 버튼들을 모두 없애고 하나만 새로 생성, Dialogue와 button에 새로운 텍스트 적용.
 }

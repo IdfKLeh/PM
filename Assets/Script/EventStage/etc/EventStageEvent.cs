@@ -27,13 +27,14 @@ namespace EventStageEventNameSpace
     {
         public List<Restriction> restriction { get; set; }
         public string text { get; set; }
-        public Action action { get; set; }
+        public List<Action> action { get; set; }
         public string afterText { get; set; }
         public string afterOptionText { get; set; }
     }
 
     public class Restriction
     {
+        public string type {get; set;}
         public string stats { get; set; }
         public int amount { get; set; }  
     }
@@ -42,8 +43,8 @@ namespace EventStageEventNameSpace
     {
         public string type { get; set; }
         public string item { get; set; }
-        public List<string> stats { get; set; }
-        public List<int> amount { get; set; }
+        public string stats { get; set; }
+        public int amount { get; set; }
     }
 
     public class Root

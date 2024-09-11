@@ -17,6 +17,7 @@ public class UserController : MonoBehaviour
     {
         saveDataDirectoryPath = Path.Combine(Application.persistentDataPath,"Save");
         saveDataPath = Path.Combine(saveDataDirectoryPath, "userData.json");
+        LoadData();
     }
 
     public void NewGame(){
@@ -225,33 +226,36 @@ public class UserController : MonoBehaviour
     }//이전 스테이지의 정보를 반환
 
     public string GetKarma(string statType, bool startAtHalf){
+        string karma;
         if(GameFunctions.IsSuccessful(PossibilityCalc(statType,startAtHalf)))
         {
             if(GameFunctions.IsSuccessful(PossibilityCalc(statType,startAtHalf))){
-                return "Good";
+                karma = "Good";
             }
             else
             {
-                return "Normal";
+                karma = "Normal";
             }
         }
         else
         {
             if(GameFunctions.IsSuccessful(PossibilityCalc(statType,startAtHalf))){
-                return "Normal";
+                karma = "Normal";
             }
             else{
-                return "Bad";
+                karma = "Bad";
             }
         }
+        Debug.Log("Current Karma: " + karma);
+        return karma;
     }//카르마 값을 세개의 선택지(Good, Normal, Bad) 중에 뽑아서 반환하는 함수
 
     public bool IsRestrictionPassed(Restriction restriction){
 
         if (restriction == null || string.IsNullOrEmpty(restriction.stats)) 
         {
-            Debug.LogError("Restriction or restriction.stats is null or empty.");
-            return false;
+            Debug.Log("Restriction or restriction.stats is null or empty.");
+            return true;
         }
         switch(restriction.stats)
         {

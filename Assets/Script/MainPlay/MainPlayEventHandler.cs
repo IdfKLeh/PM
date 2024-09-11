@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class MainPlayEventHandler : MonoBehaviour
 {
@@ -41,8 +42,13 @@ public class MainPlayEventHandler : MonoBehaviour
                 Debug.LogError("Unknown Button Name" + buttonName);
                 break;
         }
-        //PlayerPrefs.
+        EndStage("Training","Neutral");
 
-    }// 훈련화면에서 버튼을 누를 경우 해당 함수 호출됨. 호출 할 시 stamina Stat에 따라 특정 Stat 성장.   
+    }// 훈련화면에서 버튼을 누를 경우 해당 함수 호출됨. 호출 할 시 stamina Stat에 따라 특정 Stat 성장.
+    //이후 스테이지 전환을 위해 현재 스테이지의 정보 전달.   
     
+    void EndStage(string stageKind, string stageType){
+        userController.SetStageBefore(stageKind,stageType);
+        SceneManager.LoadScene("EventStage");
+    }
 }
