@@ -1,0 +1,17 @@
+{
+    "battleText":
+    {
+        "amountText":{
+            "smallest":["Super Tiny","Meager","Microscopic"],
+            "smaller":["Mini","Miniature","Tiny","Narrow"],
+            "small":["Modest","Small","Weak","Poor"],
+            "medium":["Decent","Normal","Average"],
+            "large":["Good","Strong"],
+            "larger":["Huge","Great"],
+            "largest":["Life Threatning","World Ending"]
+        },
+        "weaponText":{
+            "broadSword":["Slash","Push","Cut"]
+        }
+    }
+}

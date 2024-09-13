@@ -1,0 +1,32 @@
+{
+    "enemy":[
+        {
+            "enemyID":"basicSwordMan",
+            "enemyName":"Sword Man",
+            "homeLevel":1,
+            "visibleLevel":[1,2,3],
+            "stat":{
+                "phyStat":300,
+                "intStat":300,
+                "staStat":300,
+                "medStat":300,
+                "speStat":300,
+                "weaStat":300
+            },
+            "weaponType":"broadSword",
+            "weaponID":"rustyBroadSword",
+            "skill":[],
+            "trait":[],
+            "description":[{
+                "text":"A normal looking swordman."
+            },
+            {
+                "restriction":[{
+                    "type": "basicIntRes"
+                }],
+                "text":"Looks slow."
+            }]
+
+        }
+    ]
+}
