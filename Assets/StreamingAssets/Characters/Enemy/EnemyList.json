@@ -15,9 +15,9 @@
             },
             "weaponType":"broadSword",
             "weaponID":"rustyBroadSword",
-            "skill":[],
-            "trait":[],
-            "description":[{
+            "enemySkill":[],
+            "enemyTrait":[],
+            "enemyDescription":[{
                 "text":"A normal looking swordman."
             },
             {

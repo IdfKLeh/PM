@@ -4,7 +4,7 @@ using EventStageEventNameSpace;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy 
+public class EnemyData
 {
     public string enemyID {get; set;}
     public string enemyName {get; set;}
@@ -13,9 +13,9 @@ public class Enemy
     public Stat stat {get; set;}
     public string weaponType {get; set;}
     public string weaponID {get; set;}
-    public List<string> skill {get; set;}
-    public List<string> trait {get; set;}
-    public List<Description> description {get; set;}
+    public List<string> enemySkill {get; set;}
+    public List<string> enemyTrait {get; set;}
+    public List<Description> enemyDescription {get; set;}
 }
 
 public class Stat

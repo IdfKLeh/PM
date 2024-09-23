@@ -288,4 +288,8 @@ public class UserController : MonoBehaviour
     public int GetStageCounter(){
         return userData.stageCounter;
     }//위의 세개는 차례대로 stageCounter값을 특정 수로 설정하고, 1만 더하고, 반환하는 함수
+
+    public List<string> GetNextEnemy(){
+        return userData.nextEnemy;
+    }//다음 enemy id 를 반환하는 함수.
 }

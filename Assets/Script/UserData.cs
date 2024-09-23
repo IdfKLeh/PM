@@ -92,6 +92,14 @@ public class UserData
         get { return MainWeapon; }
         set { MainWeapon = value; }
     }
+
+    [SerializeField]
+    private List<string> NextEnemy;
+    public List<string> nextEnemy
+    {
+        get { return NextEnemy; }
+        set { NextEnemy = value; }
+    }
 }
 
 [System.Serializable]

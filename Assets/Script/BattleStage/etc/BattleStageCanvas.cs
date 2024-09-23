@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class BattleStageCanvas : MonoBehaviour
 {
-    
+    public GameObject content;
 }

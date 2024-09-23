@@ -200,7 +200,7 @@ public class EventStageEventHandler : MonoBehaviour
 
     public string GetOptionText(int optionIndex, int numberOfOptions){
             return currentEvent.allOptions[passedOptionIndexes[optionIndex]].text;
-    }
+    }//옵션의 텍스트를 반환하는 함수
 
     public void ExecuteAction(int selectedOptionIndex){
         int realOptionIndex = passedOptionIndexes[selectedOptionIndex];
@@ -223,7 +223,7 @@ public class EventStageEventHandler : MonoBehaviour
             }
         }
         
-    }
+    }//action 실행 함수. **이건 나중 아이디어, 만약 후에 또 다른 이벤트로 이어지는 이벤트를 만들거라면, 액션의 종류를 "eventChange" 이런 걸로 넣어서 다른 이벤트로 연결되도록 설정.
 
     public string GetEventAfterDialogue(int selectedOptionIndex){
         int realOptionIndex = passedOptionIndexes[selectedOptionIndex];
