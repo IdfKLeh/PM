@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using EventStageEventNameSpace;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
@@ -90,6 +91,27 @@ public class UserController : MonoBehaviour
         Debug.Log("traits current value = "+userData.phyStat+" "+userData.intStat+" "+userData.staStat+" "+userData.medStat+" "+userData.speStat+" "+userData.weaStat);
         SaveData();
     }//특정 수치를 올리거나 감소시키는 함수.
+
+    public int GetStatValue(string statType){
+        switch(statType)
+        {
+            case "phyStat":
+                return userData.phyStat;
+            case "intStat":
+                return userData.intStat;
+            case "staStat":
+                return userData.staStat;
+            case "medStat":
+                return userData.medStat;
+            case "speStat":
+                return userData.speStat;
+            case "weaStat":
+                return userData.weaStat;
+            default:
+                Debug.LogError("Unknown Stat Name"+statType);
+                return 0;
+        }
+    }//특정 user stat 수치를 반환하는 함수.
     private int StaminaCalc(int amount){
 
         float minMultiplier = 0.1f;
@@ -292,4 +314,12 @@ public class UserController : MonoBehaviour
     public List<string> GetNextEnemy(){
         return userData.nextEnemy;
     }//다음 enemy id 를 반환하는 함수.
+
+    public List<string> GetWeaponID(){
+        return userData.mainWeapon;
+    }//weaponID 를 반환하는 함수.
+
+    public List<string> GetFriendName(){
+        return userData.friendList;
+    }//friendList를 반환하는 함수.
 }

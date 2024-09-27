@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -86,8 +87,8 @@ public class UserData
     }
 
     [SerializeField]
-    private int MainWeapon;
-    public int mainWeapon
+    private List<string> MainWeapon;
+    public List<string> mainWeapon
     {
         get { return MainWeapon; }
         set { MainWeapon = value; }
@@ -99,6 +100,14 @@ public class UserData
     {
         get { return NextEnemy; }
         set { NextEnemy = value; }
+    }
+
+    [SerializeField]
+    private List<string> FriendList;
+    public List<string> friendList
+    {
+        get { return FriendList; }
+        set { FriendList = value; }
     }
 }
 

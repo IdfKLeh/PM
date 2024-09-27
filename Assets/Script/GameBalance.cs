@@ -21,5 +21,8 @@ public static class GameBalance//게임의 밸런스에 영향을 주는 수들�
     public static int referenceStaStat = 300;
     public static int referenceMedStat = 300;
     public static int referenceSpeStat = 300;
+
+    //Battle에서 winrate를 계산하기 위해 사용되는 값
+    //public static int 
     
 }

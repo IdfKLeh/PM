@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class WeaponData
 {
     public string weaponID { get; set; }
+    public string weaponType { get; set; }
+    public string weaponName { get; set; }
     public float phyStatRate { get; set; }
     public List<WeaStatRate> weaStatRate { get; set; }
     public List<WeaponAction> weaponAction { get; set; }
