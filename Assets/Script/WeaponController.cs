@@ -1,4 +1,4 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -54,48 +54,35 @@ public class WeaponController : MonoBehaviour
         }
     }//weaponDict에 저장된 데이터를 userWeaponData, friendWeaponData, enemyWeaponData에 저장하는 함수
 
-    void LoadWeaponList()
+    private void LoadWeaponList()
     {
-        string weaponDataPath = Path.Combine(Application.streamingAssetsPath,"Items", "Weapon.json");
-        Debug.Log("Loading events from:" + weaponDataPath);
+        string weaponDataPath = Path.Combine(Application.streamingAssetsPath, "Items", "Weapon.json");
+        Debug.Log("Loading weapons from:" + weaponDataPath);
 
-        List<WeaponData> weaponDataList = new List<WeaponData>();
-
-        if(!File.Exists(weaponDataPath))
+        if (File.Exists(weaponDataPath))
         {
-            Debug.LogError("Cannot find file"+weaponDataPath);
-            return;
-        }
-
-        try
-        {
-            string json = File.ReadAllText(weaponDataPath);
-            Debug.Log("JSON content: " + json);
-
-            var root = JsonConvert.DeserializeObject<List<WeaponData>>(json);
-            if(root != null)
+            string dataAsJson = File.ReadAllText(weaponDataPath);
+            var wrapper = JsonConvert.DeserializeObject<WeaponDataWrapper>(dataAsJson);
+            if (wrapper != null && wrapper.weapon != null)
             {
-                weaponDataList = root;
-                Debug.Log("Events loaded successfully.");
+                foreach (var weapon in wrapper.weapon)
+                {
+                    if (!weaponDict.ContainsKey(weapon.weaponID))
+                    {
+                        weaponDict[weapon.weaponID] = weapon;
+                    }
+                }
+                Debug.Log("Weapons loaded successfully.");
             }
             else
             {
-                Debug.LogError("Failed to parse Json.");
+                Debug.LogError("Failed to parse JSON.");
             }
         }
-        catch (JsonException ex)
+        else
         {
-            Debug.LogError("Error parsing Json: "+ ex.Message);
+            Debug.LogError("Cannot load weapon data!");
         }
-
-        foreach (WeaponData weapon in weaponDataList)
-        {
-            if (weapon != null && !weaponDict.ContainsKey(weapon.weaponID))
-            {
-                weaponDict[weapon.weaponID] = weapon;
-            }
-        }
-        
     }//weapon.json 파일을 읽어서 weaponDict에 저장하는 함수
 
     public List<WeaponData> GetUserWeaponData()

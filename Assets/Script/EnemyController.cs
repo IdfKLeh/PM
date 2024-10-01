@@ -28,11 +28,11 @@ public class EnemyController : MonoBehaviour
             string json = File.ReadAllText(enemyDataPath);
             Debug.Log("JSON content: " + json);
     
-            var root = JsonConvert.DeserializeObject<List<EnemyData>>(json);
+            var root = JsonConvert.DeserializeObject<EnemyDataWrapper>(json);
             if (root != null)
             {
-                enemyDataList = root;
-                Debug.Log("Events loaded successfully.");
+                enemyDataList = root.enemy;
+                Debug.Log("EnemyDatas loaded successfully.");
             }
             else
             {

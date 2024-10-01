@@ -14,30 +14,6 @@ public class BattleStageButtonController : MonoBehaviour
     void Start()
     {
         battleStageEventHandler = FindObjectOfType<BattleStageEventHandler>();
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
-        ShowText("This is a really long text to see if the text wraps correctly and doesn't overlap with the other texts.");
-        ShowText("Short message 1");
     }
 
     private void ShowText(string message){
@@ -78,4 +54,13 @@ public class BattleStageButtonController : MonoBehaviour
             scrollRect.verticalNormalizedPosition = 0f;
         }
     }// 특정 문장을 길이를 반영하여 view port에 보여주는 함수
+
+    public void SetBattleLog(Dictionary<string, float> battleLogToShow)
+    {
+        foreach (var log in battleLogToShow)
+        {
+            ShowText(log.Key + " == " + log.Value);
+        }
+    }// battleLogToShow에 저장된 데이터를 view port에 보여주는 함수
+    
 }

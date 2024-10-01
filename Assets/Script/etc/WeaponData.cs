@@ -31,3 +31,8 @@ public class WeaponDescription
     public List<Restriction> restriction {get; set;}
     public string text { get; set; }
 }
+
+public class WeaponDataWrapper
+{
+    public List<WeaponData> weapon { get; set; }
+}

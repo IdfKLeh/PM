@@ -32,3 +32,8 @@ public class Description{
     public List<Restriction> restriction {get; set;}
     public string text {get; set;}
 }
+
+public class EnemyDataWrapper
+{
+    public List<EnemyData> enemy {get; set;}
+}

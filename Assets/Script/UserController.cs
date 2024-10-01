@@ -19,6 +19,7 @@ public class UserController : MonoBehaviour
         saveDataDirectoryPath = Path.Combine(Application.persistentDataPath,"Save");
         saveDataPath = Path.Combine(saveDataDirectoryPath, "userData.json");
         LoadData();
+        
     }
 
     public void NewGame(){
@@ -312,14 +313,23 @@ public class UserController : MonoBehaviour
     }//위의 세개는 차례대로 stageCounter값을 특정 수로 설정하고, 1만 더하고, 반환하는 함수
 
     public List<string> GetNextEnemy(){
+        Debug.Log("Next Enemy: "+userData.nextEnemy);
         return userData.nextEnemy;
     }//다음 enemy id 를 반환하는 함수.
 
     public List<string> GetWeaponID(){
+        Debug.Log("Main Weapon: "+userData.mainWeapon);
         return userData.mainWeapon;
     }//weaponID 를 반환하는 함수.
 
     public List<string> GetFriendName(){
         return userData.friendList;
     }//friendList를 반환하는 함수.
+
+    public void SetNextEnemy(List<string> enemyID){
+        userData.nextEnemy = enemyID;
+    }//다음 enemy id를 설정하는 함수.
+    public void SetMainWeapon(List<string> weaponID){
+        userData.mainWeapon = weaponID;
+    }//main weapon을 설정하는 함수.
 }

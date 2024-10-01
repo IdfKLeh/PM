@@ -24,3 +24,8 @@ public class WeaponText
 {
     public List<string> broadSword {get; set;}
 }
+
+public class BattleTextWrapper
+{
+    public BattleText battleText { get; set; }
+}

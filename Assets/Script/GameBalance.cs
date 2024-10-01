@@ -22,7 +22,19 @@ public static class GameBalance//게임의 밸런스에 영향을 주는 수들�
     public static int referenceMedStat = 300;
     public static int referenceSpeStat = 300;
 
-    //Battle에서 winrate를 계산하기 위해 사용되는 값
-    //public static int 
+    //Battle에서 winrate를 계산하기 위해 사용되는 값들
+    //몇 퍼센트에서 락을 걸지 기준점
+    public static float positiveFirstLockReference = 70f;
+    public static float negativeFirstLockReference = 30f;
+    public static float positiveSecondLockReference = 80f;
+    public static float negativeSecondLockReference = 20f;
+    public static float positiveThirdLockReference = 90f;
+    public static float negativeThirdLockReference = 10f; 
+    //락을 얼마나 걸지의 값
+    public static float firstLockValue = 0.5f;
+    public static float secondLockValue = 0.2f;
+    public static float thirdLockValue = 0.1f;
+    
+
     
 }
