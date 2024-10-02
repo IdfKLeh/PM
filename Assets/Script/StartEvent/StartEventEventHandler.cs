@@ -211,6 +211,7 @@ public class StartEventEventHandler : MonoBehaviour
 
     void ExecuteAction(int stage, string action)
     {
+        List<string> weaponList = new List<string>();
         switch (stage)
         {
             case 0:
@@ -266,12 +267,28 @@ public class StartEventEventHandler : MonoBehaviour
                 }
                 break;
             case 2:
+                switch(action)
+                {
+                    case "Weapon Broadsword":
+                        weaponList.Add("rustyBroadSword");
+                        break; 
+                    case "Weapon Dagger":
+                        weaponList.Add("rustyDagger");
+                        break;
+                    case "Weapon Pistol":
+                        weaponList.Add("rustyPistol");
+                        break; 
+                }
+                userController.SetMainWeapon(weaponList);
+                break;
+            case 3:
                 break;
             default:
                 Debug.LogWarning("Unknown stage:"+ stage);
                 break;
         }
         if (IsThisLastEvent()){
+            FinalStartEventAction();
             userController.SaveData();
         }
         if(stage != maxStage){
@@ -281,6 +298,12 @@ public class StartEventEventHandler : MonoBehaviour
     }//option 선택시 해당 액션 실행하는 함수. stage 0의 경우 main 고르기 단계.
     //stage 1는 sub 고르기 단계.
 
+    void FinalStartEventAction()
+    {
+        userController.SetLevelCounter(1);
+        userController.SetStageCounter(1);
+        userController.SetRandomNextEnemy();
+    }//마지막 이벤트에서 실행되는 함수. 이후 MainPlay 씬으로 넘어감.
     void PickedAsMain(string pickedStat)
     {
         userController.SetMainStat(pickedStat);

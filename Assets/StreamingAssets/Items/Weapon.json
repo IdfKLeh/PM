@@ -2,8 +2,9 @@
     "weapon":[
         {
                 "weaponID": "rustyBroadSword",
-                "weaponType": "Broad Sword",
+                "weaponType": "broadSword",
                 "weaponName": "Rusty Broad Sword",
+                "hitCount": 1,
                 "phyStatRate": 0.05,
                 "weaStatRate": [{
                     "calc": "Hit Rate",

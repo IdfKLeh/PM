@@ -81,6 +81,7 @@ public class MainPlayButtonController : MonoBehaviour
                         OpenTraining();
                         break;
                     case "BattleButton":
+                        OpenPopUpWindow("Are you sure?",buttonName,group);
                         break;
                     case "OthersButton":
                         break;
@@ -117,6 +118,14 @@ public class MainPlayButtonController : MonoBehaviour
         {
             case "TrainingStuff":
                 mainPlayEventHandler.ExecuteTrainingAction(buttonName);
+                break;
+            case "MainStuff":
+                switch (buttonName)
+                {
+                    case "BattleButton":
+                        mainPlayEventHandler.ExecuteBattleAction();
+                        break;
+                }
                 break;
         }
         

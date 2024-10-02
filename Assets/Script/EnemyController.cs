@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
-
+using System.Linq;
 public class EnemyController : MonoBehaviour
 {
     private List<EnemyData> enemyData = new List<EnemyData>();
     private UserController userController;
+    private Dictionary<string, EnemyData> enemyDict = new Dictionary<string, EnemyData>();
 
 
     public void LoadEnemyData(string fileName, List<string> enemyID)
+    {
+        LoadEnemyList(fileName);
+        SetEnemyData(enemyID);
+        // Step 2: Add matching EnemyData to enemyData
+    }//enemyDataPath에 저장된 데이터를 enemyData에 저장하는 함수. 먼저 LoadEnemyList를 통해 enemyDict에 데이터를 저장하고, SetEnemyData를 통해 enemyData에 저장함.
+
+    private void LoadEnemyList(string fileName)
     {
         string enemyDataPath = Path.Combine(Application.streamingAssetsPath, "Characters", "Enemy", fileName);
         Debug.Log("Loading events from:" + enemyDataPath);
@@ -45,7 +53,6 @@ public class EnemyController : MonoBehaviour
         }
     
         // Step 1: Create a dictionary to map enemy IDs to EnemyData objects
-        Dictionary<string, EnemyData> enemyDict = new Dictionary<string, EnemyData>();
         foreach (EnemyData e in enemyDataList)
         {
             if (e != null && !enemyDict.ContainsKey(e.enemyID))
@@ -53,8 +60,10 @@ public class EnemyController : MonoBehaviour
                 enemyDict[e.enemyID] = e;
             }
         }
-    
-        // Step 2: Add matching EnemyData to enemyData
+    }// enemyDataPath에 저장된 데이터를 enemyDict에 저장하는 함수. enemyDataPath에 저장된 데이터를 읽어와서 enemyDataList에 저장한 후, enemyDataList에 저장된 데이터를 enemyDict에 저장함.
+
+    private void SetEnemyData(List<string> enemyID)
+    {
         foreach (string id in enemyID)
         {
             if (enemyDict.TryGetValue(id, out EnemyData enemy))
@@ -62,7 +71,66 @@ public class EnemyController : MonoBehaviour
                 enemyData.Add(enemy);
             }
         }
-    }//enemyDataPath에 저장된 데이터를 enemyData에 저장하는 함수
+        Debug.Log("EnemyData set to :"+ enemyData[0].enemyID);
+    }// enemyDict에 저장된 데이터 중 enemyID에 해당하는 데이터를 enemyData에 저장하는 함수.
+
+    public List<string> GetRandomEnemyID(string fileName, int level, int enemyNum, bool visibleLevel)
+    {
+        if (enemyDict == null || enemyDict.Count == 0)
+        {
+            LoadEnemyList(fileName);
+        }
+    
+        Dictionary<string, EnemyData> appropriateLevelEnemies = GetEnemiesByLevel(level, visibleLevel); // 원래 visibleLevel 쓸건지에 따라 후자를 true,false 로 골라야함.
+        List<string> randomEnemies = new List<string>();
+    
+        if (appropriateLevelEnemies.Count == 0)
+        {
+            Debug.Log("NO ENEMIES FOUND AT LEVEL " + level+ ", COME FIX ME AT ENEMYCONTROLLER");
+            return null; // Return null if no enemies are found at the specified level
+        }
+    
+        System.Random random = new System.Random();
+
+        for (int i = 0; i < enemyNum; i++)
+        {
+            if (appropriateLevelEnemies.Count == 0)
+            {
+                break; // Break if there are no more enemies to select
+            }
+
+            int randomIndex = random.Next(appropriateLevelEnemies.Count);
+            string randomEnemyID = appropriateLevelEnemies.ElementAt(randomIndex).Key;
+            randomEnemies.Add(randomEnemyID);
+
+            // Remove the selected enemy to avoid duplicates
+            appropriateLevelEnemies.Remove(randomEnemyID);
+        }
+
+        return randomEnemies;
+    }
+
+    public Dictionary<string, EnemyData> GetEnemiesByLevel(int level, bool useVisibleLevel = true)
+    {
+        Dictionary<string, EnemyData> result = new Dictionary<string, EnemyData>();
+    
+        if (useVisibleLevel)
+        {
+            foreach (var enemy in enemyDict.Values.Where(e => e.visibleLevel.Contains(level)))
+            {
+                result[enemy.enemyID] = enemy;
+            }
+        }
+        else
+        {
+            foreach (var enemy in enemyDict.Values.Where(e => e.homeLevel == level))
+            {
+                result[enemy.enemyID] = enemy;
+            }
+        }
+    
+        return result;
+    }
 
     public List<string> GetWeaponID()
     {

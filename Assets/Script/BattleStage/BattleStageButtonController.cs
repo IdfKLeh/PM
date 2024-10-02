@@ -8,7 +8,7 @@ public class BattleStageButtonController : MonoBehaviour
 {
     [SerializeField] private BattleStageCanvas battleStageCanvas;
     private BattleStageEventHandler battleStageEventHandler;
-    
+    private Button finishButton;
     public GameObject logText;
 
     void Start()
@@ -55,11 +55,31 @@ public class BattleStageButtonController : MonoBehaviour
         }
     }// 특정 문장을 길이를 반영하여 view port에 보여주는 함수
 
-    public void SetBattleLog(Dictionary<string, float> battleLogToShow)
+    public void SetBattleLog(Dictionary<string, float> battleLogToShow, float finalPercentage)
     {
         foreach (var log in battleLogToShow)
         {
             ShowText(log.Key + " == " + log.Value);
+        }
+        battleStageCanvas.buttonGroup.SetActive(true);
+        finishButton = battleStageCanvas.buttonGroup.transform.Find("FinishButton").GetComponent<Button>();
+        if (finishButton != null)
+        {
+            // Get the TextMeshPro component of the FinishButton
+            TextMeshProUGUI finishButtonText = finishButton.GetComponentInChildren<TextMeshProUGUI>();
+            finishButtonText.text = finalPercentage.ToString() + "%";
+            
+            // Add a listener to the FinishButton
+            finishButton.onClick.AddListener(() =>
+            {
+                // Change the content of the TextMeshPro
+                finishButtonText.text = "New Text Content";
+            });
+            
+        }
+        else
+        {
+            Debug.LogError("FinishButton not found in buttonGroup.");
         }
     }// battleLogToShow에 저장된 데이터를 view port에 보여주는 함수
     

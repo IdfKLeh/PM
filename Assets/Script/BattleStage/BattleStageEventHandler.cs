@@ -29,6 +29,7 @@ public class BattleStageEventHandler : MonoBehaviour
         enemyController = FindObjectOfType<EnemyController>();
         weaponController = FindObjectOfType<WeaponController>();
         battleTextController = FindObjectOfType<BattleTextController>();
+        battleStageButtonController = FindObjectOfType<BattleStageButtonController>();
 
         enemyController.LoadEnemyData("EnemyList.json",userController.GetNextEnemy());
         weaponController.LoadAllWeapons(userController.GetWeaponID(),null,enemyController.GetWeaponID());//아직 friend를 안만들어서 null로 넣음
@@ -37,17 +38,24 @@ public class BattleStageEventHandler : MonoBehaviour
 
     void StartBattle()
     {
+        if (battleTextController == null || battleStageButtonController == null)
+            {
+                Debug.LogError("BattleTextController or BattleStageButtonController is not initialized.");
+                return;
+            }
+        Debug.Log("StartBattle called.");
         LogTextCalc("user");
         LogTextCalc("friend");
         LogTextCalc("enemy");
         BattleLogOrderAndPercentageCalc();
         MakeBattleLogToShow();
-        battleStageButtonController.SetBattleLog(battleLogToShow);
+        battleStageButtonController.SetBattleLog(battleLogToShow,returningWinRatePercentage);
     }//순서대로 유저, 동료, 적의 로그를 계산하여 battleLogBeforeCalculation에 저장한 후, BattleLogOrderCalc를 호출하여 battleLogToShow에 저장.
     //아직 friend, enemy의 경우 이름 정보를 전달해줘야하는데 그걸 아직 안했음.
 
     void LogTextCalc(string person)
     {
+        Debug.Log("LogTextCalc called with person:" + person);
         WeaponTextCalc(person);
         //ItemTextCalc(person);
         //SkillTextCalc(person);
@@ -55,38 +63,60 @@ public class BattleStageEventHandler : MonoBehaviour
 
     void WeaponTextCalc(string person)
     {
+        Debug.Log("WeaponTextCalc called with person: " + person);
         List <WeaponData> targetWeaponData = new List<WeaponData>();
         if(person == "user")
         {
             targetWeaponData = weaponController.GetUserWeaponData();
+            foreach(WeaponData weapon in targetWeaponData)
+            {
+                userHitCountList.Add(weapon.hitCount);
+            }
+            Debug.Log("User weapon data retrieved.");
         }//유저인 경우의 케이스. 유저의 무기 데이터를 받아와서 계산.
 
-        if(person=="friend")
+        else if(person=="friend")
         {
             targetWeaponData = weaponController.GetFriendWeaponData();
+            foreach(WeaponData weapon in targetWeaponData)
+            {
+                friendHitCountList.Add(weapon.hitCount);
+            }
         }//동료인 경우의 케이스. 동료의 무기 데이터를 받아와서 계산.
         
-        if(person == "enemy")
+        else if(person == "enemy")
         {
             targetWeaponData = weaponController.GetEnemyWeaponData();
+            foreach(WeaponData weapon in targetWeaponData)
+            {
+                enemyHitCountList.Add(weapon.hitCount);
+            }
         }//적인 경우의 케이스. 적의 무기 데이터를 받아와서 계산.
+
+        if (targetWeaponData == null)
+        {
+            Debug.LogError($"Weapon data for {person} is not initialized.");
+            return;
+        }
     
 
         int hitrate = 0;
         float damagePercentage = 0.0f;
         if(targetWeaponData.Count == 0 || targetWeaponData == null)
         {
+            Debug.Log("targetWeaponData is empty or null.");
             return;
         }
         for(int i = 0; i < targetWeaponData.Count; i++)
         {
             WeaponData weapon = targetWeaponData[i];
             damagePercentage = (float)Math.Round(userController.GetStatValue("phyStat") * weapon.phyStatRate,2);
-            foreach(WeaStatRate weaStatRate in weapon.weaStatRate)
-                switch(weaStatRate.calc)
+            foreach(WeaStatRate weaStat in weapon.weaStatRate)
+                switch(weaStat.calc)
                 {
                     case "Hit Rate":
-                        hitrate = (int)(weaStatRate.rate * userController.GetStatValue("weaStat"));
+                        hitrate = (int)Math.Ceiling(weaStat.rate * userController.GetStatValue("weaStat"));
+                        Debug.Log("Hit rate calculated: " + hitrate);
                         break;
                     default:
                         break;
@@ -100,6 +130,7 @@ public class BattleStageEventHandler : MonoBehaviour
                     case "user":
                         weaponHitData = new BattleLogData("You","Friendly", null, battleTextController.GetChosenBattleText("WeaponText",weapon.weaponType), weapon.weaponName, damagePercentage);
                         userBattleLogDataList.Add(weaponHitData);
+                        Debug.Log("User's weapon hit data added.");
                         break;
                     case "friend":
                         weaponHitData = new BattleLogData(userController.GetFriendName()[i],"Friendly", null, battleTextController.GetChosenBattleText("WeaponText",weapon.weaponType), weapon.weaponName, damagePercentage);//아직 friend를 반환하는 함수를 안만들어서 null로 해놨음. 만들면 userController.GetFriendName()[i]으로 바꿔야함.
@@ -124,11 +155,11 @@ public class BattleStageEventHandler : MonoBehaviour
     {
         int userIndex = 0;
         int friendIndex = 0;
-        int enemyIndex = 0;
+        int enemyIndex = 0; //각각의 logList에서 현재 몇번째 문장을 출력중인지 index를 나타내는 변수
         
         int userHitCountOrder = 0;
         int friendHitCountOrder = 0;
-        int enemyHitCountOrder = 0;
+        int enemyHitCountOrder = 0; // 
     
         List<BattleLogData> orderedBattleLogDataList = new List<BattleLogData>();
     
@@ -143,9 +174,13 @@ public class BattleStageEventHandler : MonoBehaviour
                         if(userIndex >= userBattleLogDataList.Count)
                             break;
                         orderedBattleLogDataList.Add(userBattleLogDataList[userIndex]);
-                        userIndex++;
                         if(DidTheAttackerChange(userBattleLogDataList,userIndex))
-                            userHitCountOrder++;
+                        {
+                            userHitCountOrder++; //여긴 오류날듯? userBattleLogDataList에서 모든 attacker은 user로 저장되어있는데 무기가 바뀐다고해서 attacker가 바뀌는건 아님 = 인식이 안됨.
+                            break;
+                        }
+                        userIndex++;
+                            
                     }
                 }
                 else
@@ -155,9 +190,12 @@ public class BattleStageEventHandler : MonoBehaviour
                         if(friendIndex >= friendBattleLogDataList.Count)
                             break;
                         orderedBattleLogDataList.Add(friendBattleLogDataList[friendIndex]);
-                        friendIndex++;
                         if(DidTheAttackerChange(friendBattleLogDataList,friendIndex))
+                        {
                             friendHitCountOrder++;
+                            break;
+                        }
+                        friendIndex++;
                     }
                 }
             }
@@ -168,9 +206,12 @@ public class BattleStageEventHandler : MonoBehaviour
                     if(enemyIndex >= enemyBattleLogDataList.Count)
                         break;
                     orderedBattleLogDataList.Add(enemyBattleLogDataList[enemyIndex]);
-                    enemyIndex++;
                     if(DidTheAttackerChange(enemyBattleLogDataList,enemyIndex))
+                    {
                         enemyHitCountOrder++;
+                        break;
+                    }
+                    enemyIndex++;
                 }
             }
         }
@@ -248,7 +289,42 @@ public class BattleStageEventHandler : MonoBehaviour
             targetHitPercentage = (float)Math.Round(targetHitPercentage,2);
             damagePercentageAfterCalculationList.Add(targetHitPercentage);
             returningWinRatePercentage += targetHitPercentage;
+
+            //여기부턴 targetHitPercentage를 활용해 데미지의 크기에 따라 다른 amountOfDamage text를 설정하는 코드
+            float absoluteValue = Math.Abs(targetHitPercentage);
+            string damageAmountText;
+
+            if(absoluteValue <= GameBalance.smallestAmountTextReference)
+            {
+                damageAmountText = battleTextController.GetChosenBattleText("AmountText","smallest");
+            }
+            else if(absoluteValue <= GameBalance.smallerAmountTextReference)
+            {
+                damageAmountText = battleTextController.GetChosenBattleText("AmountText","smaller");
+            }
+            else if(absoluteValue <= GameBalance.smallAmountTextReference)
+            {
+                damageAmountText = battleTextController.GetChosenBattleText("AmountText","small");
+            }
+            else if(absoluteValue <= GameBalance.mediumAmountTextReference)
+            {
+                damageAmountText = battleTextController.GetChosenBattleText("AmountText","medium");
+            }
+            else if(absoluteValue <= GameBalance.largeAmountTextReference)
+            {
+                damageAmountText = battleTextController.GetChosenBattleText("AmountText","large");
+            }
+            else if(absoluteValue <= GameBalance.largerAmountTextReference)
+            {
+                damageAmountText = battleTextController.GetChosenBattleText("AmountText","larger");
+            }
+            else
+            {
+                damageAmountText = battleTextController.GetChosenBattleText("AmountText","largest");
+            }
+            battleLogData.amountOfDamage = damageAmountText;
         }//현재 최종 winRate에 따라 각 hit의 데미지 비율을 계산하고, 그 비율을 더하여 최종 데미지 비율을 다시 계산하고 해당 값들을 damagePercentageAfterCalculationList에 저장.
+        battleLogInOrder = orderedBattleLogDataList;
     }
 
     public bool DidTheAttackerChange(List<BattleLogData> battleLogDataList, int index)
@@ -262,6 +338,11 @@ public class BattleStageEventHandler : MonoBehaviour
         {
             return false;
         }
+        if (index < 0 || index >= battleLogDataList.Count)
+        {
+            Debug.LogError($"Index out of range: {index}. List count: {battleLogDataList.Count}");
+            return false; // or handle the error as appropriate
+        }
 
         string previousAttacker = battleLogDataList[index-1].attacker;
         string currentAttacker = battleLogDataList[index].attacker;
@@ -272,7 +353,7 @@ public class BattleStageEventHandler : MonoBehaviour
     {
         for(int i = 0; i < battleLogInOrder.Count; i++)
         {
-            string exampleLog = battleLogInOrder[i].attacker + ": " + battleLogInOrder[i].amountOfDamage + " " + battleLogInOrder[i].typeOfDamage + " " + battleLogInOrder[i].weaponName+"!"; 
+            string exampleLog = battleLogInOrder[i].attacker + ": " + battleLogInOrder[i].amountOfDamage + " " + battleLogInOrder[i].typeOfDamage + " with " + battleLogInOrder[i].weaponName+"!"; 
             battleLogToShow.Add(exampleLog,damagePercentageAfterCalculationList[i]);
             Debug.Log(exampleLog);
         }

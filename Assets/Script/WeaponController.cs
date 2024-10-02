@@ -87,16 +87,27 @@ public class WeaponController : MonoBehaviour
 
     public List<WeaponData> GetUserWeaponData()
     {
+        Debug.Log("User Weapon Data: " + userWeaponData[0].weaponName);
         return userWeaponData;
     }
 
     public List<WeaponData> GetFriendWeaponData()
     {
+        try
+        {
+            Debug.Log("Friend Weapon Data: " + friendWeaponData[0].weaponName);
+        }
+        catch (System.ArgumentOutOfRangeException e)
+        {
+            Debug.LogError("Friend Weapon Data is empty");
+
+        }
         return friendWeaponData;
     }
 
     public List<WeaponData> GetEnemyWeaponData()
     {
+        Debug.Log("Enemy Weapon Data: " + enemyWeaponData[0].weaponName);
         return enemyWeaponData;
     }//위의 3개는 순서대로 userWeaponData, friendWeaponData, enemyWeaponData를 반환하는 함수
 

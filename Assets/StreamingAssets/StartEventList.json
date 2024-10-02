@@ -74,6 +74,29 @@
         },
         {
             "stage": 2,
+            "stageDescription": "Main Weapon",
+            "eventType": "Three Options",
+            "optionNumber": 3,
+            "dialogues": [
+                "What will be your weapon of choice?"
+            ],
+            "allOptions": [
+                {
+                    "optionText": "Rusty Pistol",
+                    "action": "Weapon Pistol"
+                },
+                {
+                    "optionText": "Rusty Broadsword",
+                    "action": "Weapon Broadsword"
+                },
+                {
+                    "optionText": "Rusty Dagger",
+                    "action": "Weapon Dagger"
+                }
+            ]
+        },
+        {
+            "stage": 3,
             "stageDescription": "Final",
             "eventType": "One Option",
             "optionNumber": 1,

@@ -79,7 +79,7 @@ public class UserData
     }
 
     [SerializeField]
-    private int StageCounter;
+    private int StageCounter; // 현재 스테이지 카운터
     public int stageCounter
     {
         get { return StageCounter; }
@@ -87,7 +87,16 @@ public class UserData
     }
 
     [SerializeField]
-    private List<string> MainWeapon;
+    private int LevelCounter;
+    public int levelCounter
+    {
+        get { return LevelCounter; }
+        set { LevelCounter = value; }
+    }
+    
+
+    [SerializeField]
+    private List<string> MainWeapon; // 착용중인 무기
     public List<string> mainWeapon
     {
         get { return MainWeapon; }
@@ -95,7 +104,7 @@ public class UserData
     }
 
     [SerializeField]
-    private List<string> NextEnemy;
+    private List<string> NextEnemy; // 다음 예정된 적
     public List<string> nextEnemy
     {
         get { return NextEnemy; }
@@ -103,7 +112,7 @@ public class UserData
     }
 
     [SerializeField]
-    private List<string> FriendList;
+    private List<string> FriendList; // 동료 목록
     public List<string> friendList
     {
         get { return FriendList; }

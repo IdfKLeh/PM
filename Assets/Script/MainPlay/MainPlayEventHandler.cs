@@ -14,6 +14,8 @@ public class MainPlayEventHandler : MonoBehaviour
         mainPlayButtonController = FindObjectOfType<MainPlayButtonController>();
         userController = FindObjectOfType<UserController>();
         userController.LoadData();
+        if(userController.GetNextEnemy() == null)
+            userController.SetRandomNextEnemy();
     }//시작할 때 기존 userData를 로드함.
 
     public void ExecuteTrainingAction(string buttonName)
@@ -46,9 +48,18 @@ public class MainPlayEventHandler : MonoBehaviour
 
     }// 훈련화면에서 버튼을 누를 경우 해당 함수 호출됨. 호출 할 시 stamina Stat에 따라 특정 Stat 성장.
     //이후 스테이지 전환을 위해 현재 스테이지의 정보 전달.   
+
+    public void ExecuteBattleAction()
+    {
+        EndStage("BattleSelection","Neutral");
+    }
     
     void EndStage(string stageKind, string stageType){
         userController.SetStageBefore(stageKind,stageType);
-        SceneManager.LoadScene("EventStage");
+        if(stageKind == "Training")
+            SceneManager.LoadScene("EventStage");
+        else if(stageKind == "BattleSelection")
+            SceneManager.LoadScene("BattleStage");
+        
     }
 }

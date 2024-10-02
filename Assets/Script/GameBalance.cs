@@ -34,7 +34,14 @@ public static class GameBalance//게임의 밸런스에 영향을 주는 수들�
     public static float firstLockValue = 0.5f;
     public static float secondLockValue = 0.2f;
     public static float thirdLockValue = 0.1f;
-    
+
+    //BattleText 중 amountText의 기준점이 되는 값들.
+    public static float smallestAmountTextReference = 3.0f;
+    public static float smallerAmountTextReference = 7.0f;
+    public static float smallAmountTextReference = 12.0f;
+    public static float mediumAmountTextReference = 18.0f;
+    public static float largeAmountTextReference = 30.0f;
+    public static float largerAmountTextReference = 60.0f;
 
     
 }

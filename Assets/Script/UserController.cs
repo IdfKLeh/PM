@@ -312,13 +312,25 @@ public class UserController : MonoBehaviour
         return userData.stageCounter;
     }//위의 세개는 차례대로 stageCounter값을 특정 수로 설정하고, 1만 더하고, 반환하는 함수
 
+    public void SetLevelCounter(int num){
+        userData.levelCounter = num;
+    }
+
+    public void AddLevelCounter(){
+        userData.levelCounter += 1;
+    }
+
+    public int GetLevelCounter(){
+        return userData.levelCounter;
+    }//위의 세개는 차례대로 levelCounter값을 특정 수로 설정하고, 1만 더하고, 반환하는 함수
+
     public List<string> GetNextEnemy(){
-        Debug.Log("Next Enemy: "+userData.nextEnemy);
+        Debug.Log("Next Enemy: "+userData.nextEnemy[0]);
         return userData.nextEnemy;
     }//다음 enemy id 를 반환하는 함수.
 
     public List<string> GetWeaponID(){
-        Debug.Log("Main Weapon: "+userData.mainWeapon);
+        Debug.Log("Main Weapon: "+userData.mainWeapon[0]);
         return userData.mainWeapon;
     }//weaponID 를 반환하는 함수.
 
@@ -332,4 +344,10 @@ public class UserController : MonoBehaviour
     public void SetMainWeapon(List<string> weaponID){
         userData.mainWeapon = weaponID;
     }//main weapon을 설정하는 함수.
+
+    public void SetRandomNextEnemy()
+    {
+        EnemyController enemyController = FindObjectOfType<EnemyController>();
+        SetNextEnemy(enemyController.GetRandomEnemyID("EnemyList.json", GetLevelCounter(), 1,false));//나중 argument 두개는 enemyNum과 visibleLevel인데, 적을 몇마리 소환할지랑 homelevel이 아닌 곳에서도 등장시킬지임.
+    }//enemyController에서 랜덤으로 enemyID를 받아와서 nextEnemy에 저장하는 함수.
 }
