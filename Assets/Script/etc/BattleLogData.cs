@@ -13,6 +13,7 @@ public class BattleLogData
     public BattleLogData(string attacker, string typeOfAttacker,string amountOfDamage, string typeOfDamage, string weaponName, float damagePercentage)
     {
         this.attacker = attacker;
+        this.typeOfAttacker = typeOfAttacker;
         this.amountOfDamage = amountOfDamage;
         this.typeOfDamage = typeOfDamage;
         this.weaponName = weaponName;

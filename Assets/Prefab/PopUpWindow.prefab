@@ -11,14 +11,14 @@ GameObject:
   - component: {fileID: 6256571154974638637}
   - component: {fileID: 292458777498891306}
   - component: {fileID: 2318753704340130167}
-  - component: {fileID: 580411253586041018}
+  - component: {fileID: 3014286792833066107}
   m_Layer: 5
   m_Name: PopUpWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6256571154974638637
 RectTransform:
   m_ObjectHideFlags: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &580411253586041018
+--- !u!114 &3014286792833066107
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

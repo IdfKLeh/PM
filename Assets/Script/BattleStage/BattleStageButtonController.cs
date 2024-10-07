@@ -72,8 +72,7 @@ public class BattleStageButtonController : MonoBehaviour
             // Add a listener to the FinishButton
             finishButton.onClick.AddListener(() =>
             {
-                // Change the content of the TextMeshPro
-                finishButtonText.text = "New Text Content";
+                openWinLossPanel();
             });
             
         }
@@ -82,5 +81,26 @@ public class BattleStageButtonController : MonoBehaviour
             Debug.LogError("FinishButton not found in buttonGroup.");
         }
     }// battleLogToShow에 저장된 데이터를 view port에 보여주는 함수
+
+    private void openWinLossPanel()//when PopUp is opened
+    {
+        battleStageCanvas.winLossPanel.gameObject.SetActive(true);
+
+        TextMeshProUGUI winLossText = battleStageCanvas.winLossPanel.GetComponentInChildren<TextMeshProUGUI>();
+        Button okButton = battleStageCanvas.winLossPanel.transform.Find("OkButton").GetComponent<Button>();
+
+        bool didUserWin = battleStageEventHandler.DidUserWin();
+
+        battleStageEventHandler.ResultHandler(didUserWin);
+
+        if(didUserWin)
+        {
+            winLossText.text = "You Win!";
+        }
+        else
+        {
+            winLossText.text = "You Lose!";
+        }
+    }//승패 패널 여는 함수
     
 }

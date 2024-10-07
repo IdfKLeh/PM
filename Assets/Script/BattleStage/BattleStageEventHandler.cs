@@ -240,6 +240,7 @@ public class BattleStageEventHandler : MonoBehaviour
             float targetHitPercentage = battleLogData.damagePercentage;
             if(battleLogData.typeOfAttacker == "Foe")
             {
+                Debug.Log("Foe's hit percentage: " + targetHitPercentage);
                 targetHitPercentage *= -1; 
                 if (returningWinRatePercentage < 50 && returningWinRatePercentage >= negativeFirstLockReference)
                 {
@@ -264,6 +265,7 @@ public class BattleStageEventHandler : MonoBehaviour
             }
             else
             {
+                Debug.Log("Friendly's hit percentage: " + targetHitPercentage);
                 if(returningWinRatePercentage > 50 && returningWinRatePercentage <= positiveFirstLockReference)
                 {
                     float t = returningWinRatePercentage / positiveFirstLockReference;
@@ -288,6 +290,7 @@ public class BattleStageEventHandler : MonoBehaviour
             targetHitPercentage *= percentageMultiplier;
             targetHitPercentage = (float)Math.Round(targetHitPercentage,2);
             damagePercentageAfterCalculationList.Add(targetHitPercentage);
+            Debug.Log("Damage percentage after calculation: " + targetHitPercentage);
             returningWinRatePercentage += targetHitPercentage;
 
             //여기부턴 targetHitPercentage를 활용해 데미지의 크기에 따라 다른 amountOfDamage text를 설정하는 코드
@@ -358,4 +361,14 @@ public class BattleStageEventHandler : MonoBehaviour
             Debug.Log(exampleLog);
         }
     }//BattleStageButtonController에서 사용할 수 있도록 battleLogToShow에 저장.
+
+    public bool DidUserWin()
+    {
+        return GameFunctions.IsSuccessful(returningWinRatePercentage);
+    }//유저가 이겼는지 졌는지 반환하는 함수
+
+    public void ResultHandler(bool didUserWin)
+    {
+        
+    }//이겼는지 졌는지에 따라 결과를 반영하는 함수.
 }

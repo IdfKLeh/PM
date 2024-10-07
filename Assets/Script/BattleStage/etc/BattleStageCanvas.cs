@@ -6,4 +6,5 @@ public class BattleStageCanvas : MonoBehaviour
 {
     public GameObject content;
     public GameObject buttonGroup;
+    public GameObject winLossPanel;
 }
