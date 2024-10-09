@@ -301,7 +301,7 @@ public class StartEventEventHandler : MonoBehaviour
     void FinalStartEventAction()
     {
         userController.SetLevelCounter(1);
-        userController.SetStageCounter(1);
+        userController.SetStageCounter(0);
         userController.SetRandomNextEnemy();
     }//마지막 이벤트에서 실행되는 함수. 이후 MainPlay 씬으로 넘어감.
     void PickedAsMain(string pickedStat)

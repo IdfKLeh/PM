@@ -50,6 +50,27 @@ public class UserData
     }
 
     [SerializeField]
+    private int Money;
+    public int money{
+        get{ return Money; }
+        set{ Money = value; }
+    }
+
+    [SerializeField]
+    private int MaxHealth;
+    public int maxHealth{
+        get{ return MaxHealth; }
+        set{ MaxHealth = value; }
+    }
+
+    [SerializeField]
+    private int CurrentHealth;
+    public int currentHealth{
+        get{ return CurrentHealth; }
+        set{ CurrentHealth = value; }
+    }
+
+    [SerializeField]
     private int ThisRunSeed;//이번 시드
     public int thisRunSeed{
         get{return ThisRunSeed;}
@@ -117,6 +138,14 @@ public class UserData
     {
         get { return FriendList; }
         set { FriendList = value; }
+    }
+
+    [SerializeField]
+    private string CurrentEvent; // 만약 진행 중이었다면, 로드를 위한 현재 이벤트
+    public string currentEvent
+    {
+        get { return CurrentEvent; }
+        set { CurrentEvent = value; }
     }
 }
 

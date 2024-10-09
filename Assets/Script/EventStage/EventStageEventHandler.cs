@@ -14,6 +14,7 @@ public class EventStageEventHandler : MonoBehaviour
     private EventStageEvent currentEvent;
     private UserController userController;
     private StageInfo stageBefore;//이전 스테이지의 정보를 저장하는 변수
+    private string currentEventStageIDForLoading;//로딩을 위해 필요한 경우 현재 이벤트 스테이지의 ID를 저장하는 변수
     public List<int> passedOptionIndexes = new List<int>();//옵션 중 무엇이 표시되는지 번호를 저장해놓는 리스트
     private string targetAfterStage; //보통의 경우 MainPlay로 가야하지만 보스 스테이지 등의 특수 상황의 경우 어디로 갈지 목적지를 적어두는 변수
     void Awake()
@@ -22,13 +23,13 @@ public class EventStageEventHandler : MonoBehaviour
         stageBefore = userController.GetStageBefore();
         switch (stageBefore.stageKind)
         {
-            case "Battle":
+            case "BattleStage":
                 LoadEventStageEvents("BattleEventStageList.json");
                 break;
-            case "Training":
+            case "TrainingStage":
                 LoadEventStageEvents("TrainingEventStageList.json");
                 break;
-            case "Boss":
+            case "BossStage":
                 LoadEventStageEvents("BossEventStageList.json");
                 break;
             default:
@@ -75,8 +76,15 @@ public class EventStageEventHandler : MonoBehaviour
     }//json에서 이벤트들을 읽어 eventStageEvent에 저장함.
 
     void SetEvent(string type){
+        if(userController.GetCurrentEvent() != "Empty" )
+        {
+            currentEventStageIDForLoading = userController.GetCurrentEvent();
+            SetCurrentEvent(GetEventsByID(currentEventStageIDForLoading));
+            return;
+        }
+
         string karma = userController.GetKarma("medStat", false);
-        
+
         List<EventStageEvent> events = GetEventsByTypeAndKarma(type,karma);
         
         if (events == null || events.Count == 0)
@@ -96,6 +104,7 @@ public class EventStageEventHandler : MonoBehaviour
             return;
         }
         currentEvent = gameEvent;
+        userController.SetCurrentEvent(currentEvent.eventID);//로딩을 위해 현재 이벤트 스테이지의 ID를 저장
         Debug.Log("Current event set: " + currentEvent.eventID);
     }//대상 EventStageEvent를 currentEvent로 설정하는 함수
 
@@ -103,6 +112,30 @@ public class EventStageEventHandler : MonoBehaviour
     {
         return Random.Range(0, eventListCount);
     }//주어진 이벤트 수 중에서 랜덤한 번호 출력
+
+    EventStageEvent GetEventsByID(string eventID)
+    {
+        Debug.Log("Setting event for ID: "+ eventID);
+        if (eventStageEvent == null)
+        {
+            Debug.LogError("eventStageEvent list is null.");
+            return null;
+        }
+        foreach(EventStageEvent e in eventStageEvent)
+        {
+            if (e == null)
+            {
+                Debug.LogWarning("Encountered a null StartEvent object.");
+                continue;
+            }
+            if (e.eventID == eventID)
+            {
+                return e;
+            }
+        }
+        Debug.LogWarning("No events found for the given ID.");
+        return null;
+    }
 
     List<EventStageEvent> GetEventsByTypeAndKarma(string type, string karma){
         Debug.Log("Setting event for type: "+ type+ ", and karma: "+ karma);
@@ -222,6 +255,8 @@ public class EventStageEventHandler : MonoBehaviour
                     break;
             }
         }
+        userController.SaveData();
+        userController.EmptyCurrentEvent();
         
     }//action 실행 함수. **이건 나중 아이디어, 만약 후에 또 다른 이벤트로 이어지는 이벤트를 만들거라면, 액션의 종류를 "eventChange" 이런 걸로 넣어서 다른 이벤트로 연결되도록 설정.
 
@@ -251,7 +286,9 @@ public class EventStageEventHandler : MonoBehaviour
     }//다음 스테이지가 뭔지 확인하고 바꿔주는 함수
 
     private void SceneChange(string stageName){
+        userController.SetStageBefore("EventStage","Neutral");
         userController.SaveData();
+
         SceneManager.LoadScene(stageName);
     }//다음 스테이지를 전달받아 정보 저장후 그걸로 바꿔주는 함수.
 }

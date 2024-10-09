@@ -25,6 +25,20 @@
                     "type": "basicIntRes"
                 }],
                 "text":"Looks slow."
+            }],
+            "winAction":[{
+                "type":"moneyGet",
+                "amount":100
+            },
+            {
+                "type":"statChange",
+                "stats":"phyStat",
+                "amount":5
+            }],
+            "loseAction":[{
+                "type":"statChange",
+                "stats":"phyStat",
+                "amount":-5
             }]
 
         }

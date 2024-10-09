@@ -9,7 +9,7 @@
             "dialogues": [
                 {
                     "restriction":[{}],
-                    "text": "A smelly old man approaches, asking you for a hug. Will you give him a hug?"
+                    "text": "This is a BattleEventStage. A smelly old man approaches, asking you for a hug. Will you give him a hug?"
                 },
                 {
                     "restriction":[{
@@ -20,7 +20,7 @@
                 },
                 {
                     "restriction":[{
-                        "stats":"strStat",
+                        "stats":"phyStat",
                         "amount":400
                     }],
                     "text": "Despite his large figure, he seems to be bearly standing."
@@ -30,34 +30,137 @@
                 {
                     "restriction":[{}],
                     "text": "Sure, Hug him!",
-                    "action": {
+                    "action": [{
                         "type": "itemGet",
                         "item": "golden coin"
-                    },
-                    "afterText": "He was satisfied, gave you a golden coin!",
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "He was satisfied, gave you a golden coin!"
+                    }],
                     "afterOptionText": "Yay!"
                 },
                 {
                     "restriction":[{}],
                     "text": "Fuck no.",
-                    "action": {
-                    },
-                    "afterText": "He looked hurt, maybe you should have hugged him after all..",
+                    "action": [{
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "He looked hurt, maybe you should have hugged him after all.."
+                    }],
                     "afterOptionText": "Who do you think you are?"
                 },
                 {
                     "restriction": [{
-                        "stats": "strStat",
+                        "stats": "phyStat",
                         "amount": 800
                     }],
                     "text": "Rob him!",
-                    "action": {
+                    "action": [{
                         "type": "statChange",
-                        "stats": ["strStat","intStat"],
-                        "amount":[20,-80]
+                        "stats": "phyStat",
+                        "amount": 20
                     },
-                    "afterText": "During a short fistfight, the old man lost balance and fell head first on the floor, dying instantly.",
+                    {
+                        "type": "statChange",
+                        "stats": "intStat",
+                        "amount":-80 
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "During a short fistfight, the old man lost balance and fell head first on the floor, dying instantly."
+                    }],
                     "afterOptionText": "You got stronger, but dumber."
+                }
+            ]
+        },
+        {
+            "eventID": "Begger",
+            "conditions": "None",
+            "eventType": "Neutral",
+            "eventKarma": "Bad",
+            "basicOptionNumber":2,
+            "dialogues": [
+                {
+                    "restriction":[{}],
+                    "text": "This is a BattleEventStage. A smelly old man approaches, asking you for a hug. Will you give him a hug?"
+                },
+                {
+                    "restriction":[{
+                        "stats":"intStat",
+                        "amount":300
+                    }],
+                    "text":"His toes actually look clean."
+                },
+                {
+                    "restriction":[{
+                        "stats":"phyStat",
+                        "amount":400
+                    }],
+                    "text": "Despite his large figure, he seems to be bearly standing."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction":[{}],
+                    "text": "Sure, Hug him!",
+                    "action": [{
+                        "type": "itemGet",
+                        "item": "golden coin"
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "He was satisfied, gave you a golden coin!"
+                    }],
+                    "afterOptionText": "Yay!"
+                },
+                {
+                    "restriction":[{}],
+                    "text": "Fuck no.",
+                    "action": [{
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "He looked hurt, maybe you should have hugged him after all.."
+                    }],
+                    "afterOptionText": "Who do you think you are?"
+                },
+                {
+                    "restriction": [{
+                        "stats": "phyStat",
+                        "amount": 800
+                    }],
+                    "text": "Rob him!",
+                    "action": [{
+                        "type": "statChange",
+                        "stats": "phyStat",
+                        "amount": 20
+                    },
+                    {
+                        "type": "statChange",
+                        "stats": "intStat",
+                        "amount":-80 
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "During a short fistfight, the old man lost balance and fell head first on the floor, dying instantly."
+                    }], 
+                    "afterOptionText": "You got stronger, but dumber."
+                },
+                {
+                    "restriction": [{
+                        "stats": "staStat",
+                        "amount": 800
+                    }],
+                    "text": "Defend yourself",
+                    "action": [{
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You blocked the shot, barely getting any damage from it."
+                    }], 
+                    "afterOptionText": "Whew."
                 }
             ]
         },
@@ -70,18 +173,21 @@
             "dialogues":[
                 {
                     "restriction":[{}],
-                    "text": "Your opponent was actually a criminal with a bounty on his head."
+                    "text": "This is a BattleEventStage. Your opponent was actually a criminal with a bounty on his head."
                 }
             ],
             "allOptions": [
                 {
                     "restriction": [{}],
                     "text": "Collect Bounty",
-                    "action": {
+                    "action": [{
                         "type": "moneyGet",
-                        "amount": [100]
-                    },
-                    "afterText": "You got 100g, which will be used finely.",
+                        "amount": 100
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You got 100g, which will be used finely."
+                    }], 
                     "afterOptionText": "Yay!"
                 },
                 {
@@ -90,12 +196,105 @@
                         "amount": 400
                     }],
                     "text": "Respectfully refuse",
-                    "action":{
+                    "action":[{
                         "type": "statChange",
-                        "stats": ["medStat"],
-                        "amount": [10]
-                    },
-                    "afterText": "You feel like a better person.",
+                        "stats": "medStat",
+                        "amount": 10
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You feel like a better person."
+                    }], 
+                    "afterOptionText": "Yay!"
+                }
+            ]
+        },
+        {
+            "eventID": "Bounty",
+            "conditions": "None",
+            "eventType": "Positive",
+            "eventKarma":"Normal",
+            "basicOptionNumber": 2,
+            "dialogues":[
+                {
+                    "restriction":[{}],
+                    "text": "This is a BattleEventStage. Your opponent was actually a criminal with a bounty on his head."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction": [{}],
+                    "text": "Collect Bounty",
+                    "action": [{
+                        "type": "moneyGet",
+                        "amount": 100
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You got 100g, which will be used finely."
+                    }], 
+                    "afterOptionText": "Yay!"
+                },
+                {
+                    "restriction":[{
+                        "stats":"medStat",
+                        "amount": 400
+                    }],
+                    "text": "Respectfully refuse",
+                    "action":[{
+                        "type": "statChange",
+                        "stats": "medStat",
+                        "amount": 10
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You feel like a better person."
+                    }], 
+                    "afterOptionText": "Yay!"
+                }
+            ]
+        },
+        {
+            "eventID": "Bounty",
+            "conditions": "None",
+            "eventType": "Positive",
+            "eventKarma":"Bad",
+            "basicOptionNumber": 2,
+            "dialogues":[
+                {
+                    "restriction":[{}],
+                    "text": "This is a BattleEventStage. Your opponent was actually a criminal with a bounty on his head."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction": [{}],
+                    "text": "Collect Bounty",
+                    "action": [{
+                        "type": "moneyGet",
+                        "amount": 100
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You got 100g, which will be used finely."
+                    }], 
+                    "afterOptionText": "Yay!"
+                },
+                {
+                    "restriction":[{
+                        "stats":"medStat",
+                        "amount": 400
+                    }],
+                    "text": "Respectfully refuse",
+                    "action":[{
+                        "type": "statChange",
+                        "stats": "medStat",
+                        "amount": 10
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You feel like a better person."
+                    }], 
                     "afterOptionText": "Yay!"
                 }
             ]
@@ -104,23 +303,26 @@
             "eventID": "GetPunched",
             "conditions": "None",
             "eventType": "Negative",
-            "eventKarma": "Bad",
+            "eventKarma": "Normal",
             "basicOptionNumber": 2,
             "dialogues": [
                 {
                     "restrition":[{}],
-                    "text": "Your opponent hit you in the face while you were down."
+                    "text": "This is a BattleEventStage. Your opponent hit you in the face while you were down."
                 }
             ],
             "allOptions": [
                 {
                     "restriction": [{}],
                     "text": "Get hit",
-                    "action": {
+                    "action": [{
                         "type": "healthChange",
-                        "amount": [5]
-                    },
-                    "afterText": "Ouch.",
+                        "amount": -5
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "Ouch."
+                    }], 
                     "afterOptionText": "Damn."
                 },
                 {
@@ -129,9 +331,11 @@
                         "amount": 800
                     }],
                     "text": "Defend yourself",
-                    "action": {
-                    },
-                    "afterText": "You blocked the shot, barely getting any damage from it.",
+                    "action": [{}],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text":  "You blocked the shot, barely getting any damage from it."
+                    }], 
                     "afterOptionText": "Whew."
                 }
             ]

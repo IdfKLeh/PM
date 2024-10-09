@@ -4,6 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 using System.Linq;
+using EventStageEventNameSpace;
 public class EnemyController : MonoBehaviour
 {
     private List<EnemyData> enemyData = new List<EnemyData>();
@@ -108,7 +109,7 @@ public class EnemyController : MonoBehaviour
         }
 
         return randomEnemies;
-    }
+    }// enemyDict에 저장된 데이터 중 level에 해당하는 데이터를 랜덤으로 enemyNum개 만큼 가져오는 함수.
 
     public Dictionary<string, EnemyData> GetEnemiesByLevel(int level, bool useVisibleLevel = true)
     {
@@ -130,7 +131,7 @@ public class EnemyController : MonoBehaviour
         }
     
         return result;
-    }
+    }// enemyDict에 저장된 데이터 중 level에 해당하는 목록을 전부 가져오는 함수. visibleLevel이 true면 visibleLevel에 해당하는 데이터를, false면 homeLevel에 해당하는 데이터를 가져옴.
 
     public List<string> GetWeaponID()
     {
@@ -151,7 +152,26 @@ public class EnemyController : MonoBehaviour
         }
         return enemyName;
     }//enemyData에 저장된 데이터에서 enemyName들을 가져오는 함수
+
+    public List<Action> GetWinAction()
+    {
+        List<Action> winAction = new List<Action>();
+        foreach (EnemyData enemy in enemyData)
+        {
+            winAction.AddRange(enemy.winAction);
+        }
+        return winAction;
+    }//enemyData에 저장된 데이터에서 winAction들을 가져오는 함수
     
+    public List<Action>GetLoseAction()
+    {
+        List<Action> loseAction = new List<Action>();
+        foreach (EnemyData enemy in enemyData)
+        {
+            loseAction.AddRange(enemy.loseAction);
+        }
+        return loseAction;
+    }//enemyData에 저장된 데이터에서 loseAction들을 가져오는 함수
 
     
 

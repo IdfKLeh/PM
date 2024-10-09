@@ -43,5 +43,11 @@ public static class GameBalance//게임의 밸런스에 영향을 주는 수들�
     public static float largeAmountTextReference = 30.0f;
     public static float largerAmountTextReference = 60.0f;
 
+    //최대 체력 값과 관련된 값들
+    public static float maxHealthMultiplier = 0.1f;
+
+    //전투와 관련된 값들
+    public static int basicBattleLossLosingHealth = 1;
+
     
 }

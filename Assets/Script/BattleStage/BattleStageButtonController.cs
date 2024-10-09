@@ -91,16 +91,22 @@ public class BattleStageButtonController : MonoBehaviour
 
         bool didUserWin = battleStageEventHandler.DidUserWin();
 
-        battleStageEventHandler.ResultHandler(didUserWin);
+        List<string> resultText = battleStageEventHandler.ResultHandler(didUserWin);
 
         if(didUserWin)
         {
-            winLossText.text = "You Win!";
+            resultText.Insert(0, "You Win!");
         }
         else
         {
-            winLossText.text = "You Lose!";
+            resultText.Insert(0, "You Lose!");
         }
+        winLossText.text = string.Join("\n",resultText);
+
+        okButton.onClick.AddListener(() =>
+        {
+            battleStageEventHandler.FinishBattleStage();
+        });
     }//승패 패널 여는 함수
     
 }

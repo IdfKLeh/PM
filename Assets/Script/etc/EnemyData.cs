@@ -16,6 +16,8 @@ public class EnemyData
     public List<string> enemySkill {get; set;}
     public List<string> enemyTrait {get; set;}
     public List<Description> enemyDescription {get; set;}
+    public List<Action> winAction {get; set;}
+    public List<Action> loseAction {get; set;}
     
 }
 

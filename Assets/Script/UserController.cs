@@ -29,6 +29,9 @@ public class UserController : MonoBehaviour
         userData.speStat = 200;
         userData.medStat = 200;
         userData.weaStat = 200;
+        userData.money = 100;
+        SetMaxAndCurrentHealth();
+        EmptyCurrentEvent();
         SaveData();
     } //새 게임 시작시 설정되는 기본 스탯
 
@@ -77,6 +80,7 @@ public class UserController : MonoBehaviour
                 break;
             case "medStat":
                 userData.medStat += amount;
+                ApplyMaxHealthChange();
                 break;
             case "speStat":
                 userData.speStat += amount;
@@ -88,9 +92,6 @@ public class UserController : MonoBehaviour
                 Debug.LogError("Unknown Stat Name"+statType);
                 break;
         }
-        Debug.Log("trait up = " + statType + ", amount = " + amount);
-        Debug.Log("traits current value = "+userData.phyStat+" "+userData.intStat+" "+userData.staStat+" "+userData.medStat+" "+userData.speStat+" "+userData.weaStat);
-        SaveData();
     }//특정 수치를 올리거나 감소시키는 함수.
 
     public int GetStatValue(string statType){
@@ -350,4 +351,91 @@ public class UserController : MonoBehaviour
         EnemyController enemyController = FindObjectOfType<EnemyController>();
         SetNextEnemy(enemyController.GetRandomEnemyID("EnemyList.json", GetLevelCounter(), 1,false));//나중 argument 두개는 enemyNum과 visibleLevel인데, 적을 몇마리 소환할지랑 homelevel이 아닌 곳에서도 등장시킬지임.
     }//enemyController에서 랜덤으로 enemyID를 받아와서 nextEnemy에 저장하는 함수.
+
+    public void SetMoney(int amount)
+    {
+        userData.money = amount;
+    }
+
+    public void AddMoney(int amount)
+    {
+        userData.money += amount;
+    }
+
+    public int GetMoney()
+    {
+        return userData.money;
+    }//돈을 설정하고, 더하고, 반환하는 함수.
+
+    public void SetMaxAndCurrentHealth()
+    {
+        userData.maxHealth = MaxHealthCalc();
+        userData.currentHealth = userData.maxHealth;
+    }//아마 처음에만 쓸, 최대 체력과 현재 체력(만땅) 설정하는 함수.
+
+    public int MaxHealthCalc()
+    {
+        return (int)Math.Round((double)(userData.medStat * GameBalance.maxHealthMultiplier));
+    }//medStat을 기반으로 최대 체력을 계산하는 함수.
+
+    public void ApplyMaxHealthChange()
+    {
+        int healthDifference = userData.maxHealth - MaxHealthCalc();
+        if(healthDifference != 0)
+        {
+            userData.maxHealth = MaxHealthCalc();
+            userData.currentHealth += healthDifference;
+        }
+    }//최대 체력을 계산하여 생긴 차이를 userData의 maxHealth와 currentHealth에 적용하는 함수.
+
+    public void SetCurrentHealth(int amount)
+    {
+        userData.currentHealth = amount;
+    }
+    
+    public void AddCurrentHealth(int amount)
+    {
+        userData.currentHealth += amount;
+    }
+
+    public void GetCurrentHealth()
+    {
+        userData.currentHealth = userData.maxHealth;
+    }//currentHealth를 설정하고, 더하고, 반환하는 함수.
+
+    public string GetCurrentEvent()
+    {
+            return userData.currentEvent; 
+    }//만약 저장된게 있다면 currentEvent를 반환하는 함수. 없으면 "Empty"를 반환.
+
+    public void SetCurrentEvent(string eventID)
+    {
+        userData.currentEvent = eventID;
+    }//currentEvent를 설정하는 함수.
+
+    public void EmptyCurrentEvent()
+    {
+        userData.currentEvent = "Empty";
+    }//currentEvent를 비우는 함수.
+
+
+    public void BattleLostHealthChange(float winRatePercentage)
+    {
+        int losingHealth = GameBalance.basicBattleLossLosingHealth;//깎일 체력
+        int referenceLostValue = 50;//체력이 깎이기 시작하는 기준 확률
+        if(userData.intStat >= 500)
+        {
+            referenceLostValue=(int)Math.Round((double)userData.intStat/10);
+        }
+        referenceLostValue = 100-referenceLostValue;
+        if(winRatePercentage >= referenceLostValue)
+        {
+            AddCurrentHealth(-losingHealth);
+        }
+        else
+        {
+            losingHealth += referenceLostValue - (int)winRatePercentage;
+            AddCurrentHealth(-losingHealth);
+        }
+    }//전투 패배시 intStat에 따라 체력이 깎이는 비율을 조정하고, 이에 따라 체력을 깎는 함수.
 }

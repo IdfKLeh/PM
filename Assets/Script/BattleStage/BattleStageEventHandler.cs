@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 
 //아직 작동 안됨. 지금 먼저 이전 스테이지 단계로 가서 무기랑 다음 적 정해주는 거부터 만들거임.
@@ -367,8 +368,73 @@ public class BattleStageEventHandler : MonoBehaviour
         return GameFunctions.IsSuccessful(returningWinRatePercentage);
     }//유저가 이겼는지 졌는지 반환하는 함수
 
-    public void ResultHandler(bool didUserWin)
+    public List<string> ResultHandler(bool didUserWin)
     {
+        List<EventStageEventNameSpace.Action> actions = new List<EventStageEventNameSpace.Action>();
+        List<string> resultText = new List<string>();
+        if(didUserWin)
+        {
+            userController.SetStageBefore("BattleStage","Positive");
+            actions = enemyController.GetWinAction();
+            foreach(EventStageEventNameSpace.Action action in actions)
+            {
+                if(action.type == "moneyGet")
+                {
+                    userController.AddMoney(action.amount);
+                    resultText.Add("You got " + action.amount + " money!");
+                }
+                if(action.type == "statChange")
+                {
+                    userController.ChangeStat(action.amount,action.stats);
+                    resultText.Add("Your " + action.stats + " has changed by " + action.amount + "!");
+                }
+                if(action.type == "itemGet")
+                {
+                    //여기에 아이템 추가하는 코드 추가
+                }
+            }
+        }
+        else
+        {
+            userController.SetStageBefore("BattleStage","Negative");
+            userController.BattleLostHealthChange(returningWinRatePercentage);
+            actions = enemyController.GetLoseAction();
+            foreach(EventStageEventNameSpace.Action action in actions)
+            {
+                if(action.type == "moneyGet")
+                {
+                    userController.AddMoney(action.amount);
+                    resultText.Add("You lost " + action.amount + " money!");
+                }
+                if(action.type == "statChange")
+                {
+                    userController.ChangeStat(action.amount,action.stats);
+                    resultText.Add("Your " + action.stats + " has changed by " + action.amount + "!");
+                }
+                if(action.type == "itemGet")
+                {
+                    //여기에 아이템 추가하는 코드 추가
+                }
+            }
+        }
+
+        if(userController.GetStageCounter() < 10){
+            userController.SetNextEnemy(enemyController.GetRandomEnemyID("EnemyList.json",userController.GetLevelCounter(),1,false));//나중에 여길 보고 특정 스테이지부터 1마리가 아니라 여러마리를 소환해야하는 경우 1을 바꾸는 옵션 넣을것
+        }
+        else
+        {
+            userController.SetNextEnemy(enemyController.GetRandomEnemyID("BossList.json",userController.GetLevelCounter(),1,true));
+        }//다음 적을 정하는 코드. 현재 스테이지가 10보다 작으면 일반 적을, 10이상이면 보스를 소환.
         
+        userController.SaveData();
+
+
+
+        return resultText;
     }//이겼는지 졌는지에 따라 결과를 반영하는 함수.
+
+    public void FinishBattleStage(){
+        SceneManager.LoadScene("EventStage");
+    }//씬 전환해주는 함수
+    
 }
