@@ -216,9 +216,9 @@ public class UserController : MonoBehaviour
                 possibility += 0.5f; // startAtHalf인 경우 0.5 더하기 *후에 
         }
 
-        return possibility;
+        return possibility*100;
     }//medStat에 따라 50프로에서 증감하거나, 0프로에서 시작하는 경우의 확률을 계산하여 반환하는 함수.
-
+    //근데 지금 medStat이 max일때 최대 확률이 50프로인데, 이러면 karma에서 good 25, normal 50, bad 25가 됨. 좀 안나옴 그래서 수정 요망
     public void SetSeed(int seed){
         userData.thisRunSeed = seed;
         SaveData();

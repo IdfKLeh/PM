@@ -249,6 +249,199 @@
                     "afterOptionText": "Whew."
                 }
             ]
+        },
+        {
+            "eventID": "meetingWithTheBear",
+            "conditions": "None",
+            "eventType": "Neutral",
+            "eventKarma": "Good",
+            "basicOptionNumber":2,
+            "dialogues": [
+                {
+                    "restriction":[{}],
+                    "text": "You are trying to get through a mountain. As the sun goes down, you hurry your footsteps to not get caught by the darkness of the forest, when suddenly, you find yourself caught in the middle of a tense standoff between a boy and a huge bear."
+                },
+                {
+                    "restriction":[{
+                        "stats":"intStat",
+                        "amount":400
+                    }],
+                    "text":"The boy seems terrified, trying to stay completely still, not to provoke the bear, while the bear on the other hand seems willing to pounce at the boy at any time, only stopped by the throwing spear loaded at the boys hand."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction":[{}],
+                    "text": "Defeat the bear with the boy!",
+                    "action": [{
+                        "type": "battleStart",
+                        "stats": "callisto"
+                    }]
+                },
+                {
+                    "restriction":[{}],
+                    "text": "Help the boy run away.",
+                    "action": [{
+                        "type":"moneyGet",
+                        "amount": 100
+                    },
+                    {
+                        "type": "statChange",
+                        "stats": "medStat",
+                        "amount": 5
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You exchanged a look with the boy, and a second later yelled in a booming voice, scaring and also turning the bear’s attention to yourself. “Run!” you exclaimed, as you started to run in the opposite direction of the boy. The last thing you saw was the boy sprinting off downwards the mountain, and although you didn’t stop for a quite a long time, the bear did not seem to chase either of you at all. After you were certain that it was perfectly safe, you headed down the mountain and to the nearest village, where you found the boy searching everywhere at the entrance eager to meet his saver, and receive a few coins as a sign of gratitude."
+                    },
+                    {
+                        "restriction":[{
+                            "stats":"intStat",
+                            "amount":300
+                        }],
+                        "text": "Wonder why the bear didn't follow any of us?"
+                    }],
+                    "afterOptionText": "Yay!"
+                },
+                {
+                    "restriction": [{
+                        "stats": "speStat",
+                        "amount": 600
+                    }],
+                    "text": "Pray to the great father Zeus.",
+                    "action": [{
+                        "type": "moneyGet",
+                        "amount": 200
+                    },
+                    {
+                        "type": "pointChange",
+                        "stats": "heraPoint",
+                        "amount": -5
+
+                    },
+                    {
+                        "type": "eventStart",
+                        "stats": "zeusGift" 
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You get down on your knees and start to pray. The boy and the bear looks baffled at this sudden gesture, as well as yourself, to be honest. It just seemed like the right thing to do! Anyhow, it must’ve been correct, because Zeus himself answered almost immediately, mediating the near-happen of battle with a powerful swift of wind, knocking both the bear and the boy of the ground, and into the high skies. Zeus then presented your mind with the entire knowledge of the situation, as well as a good amount of gold and a gift of your choice."
+                    }], 
+                    "afterOptionText": "Yay!"
+                },
+                {
+                    "restriction": [{
+                        "stats": "phyStat",
+                        "amount": 700
+                    }],
+                    "text": "Spear the bear!",
+                    "action": [{
+                        "type": "moneyGet",
+                        "amount": 200
+                    },
+                    {
+                        "type": "pointChange",
+                        "stats": "zeusPoint",
+                        "amount": -20
+                    },
+                    {
+                        "type": "healthChange",
+                        "amount": 10
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "With a powerful, yet swift movement, you take the spear from the boys arm and impale the bear in the exact point where its heart must lie. The bear lets out a enormous, yet somehow heartbreaking cry, before pummeling head first to the soft ground. The boy thanks you, and helps you skin the bear for its spoils, and leads you to his home serving a great dish of bear soup. Although for some reason, he did not eat a bite and decided to go straight to bed, telling you that you can rest however you want. You take a good nights sleep and head out first in the morning, not able to thank the boy as he did not leave his room, doors tightly closed."
+                    }], 
+                    "afterOptionText": "Whew."
+                }
+            ]
+        },
+        {
+            "eventID": "Bounty",
+            "conditions": "None",
+            "eventType": "Positive",
+            "eventKarma":"Good",
+            "basicOptionNumber": 2,
+            "dialogues":[
+                {
+                    "restriction":[{}],
+                    "text": "Your opponent was actually a criminal with a bounty on his head."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction": [{}],
+                    "text": "Collect Bounty",
+                    "action": [{
+                        "type": "moneyGet",
+                        "amount": 100
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You got 100g, which will be used finely."
+                    }], 
+                    "afterOptionText": "Yay!"
+                },
+                {
+                    "restriction":[{
+                        "stats":"medStat",
+                        "amount": 400
+                    }],
+                    "text": "Respectfully refuse",
+                    "action":[{
+                        "type": "statChange",
+                        "stats": "medStat",
+                        "amount": 10
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You feel like a better person."
+                    }], 
+                    "afterOptionText": "Yay!"
+                }
+            ]
+        },
+        {
+            "eventID": "GetPunched",
+            "conditions": "None",
+            "eventType": "Negative",
+            "eventKarma": "Bad",
+            "basicOptionNumber": 2,
+            "dialogues": [
+                {
+                    "restrition":[{}],
+                    "text": "Your opponent hit you in the face while you were down."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction": [{}],
+                    "text": "Get hit",
+                    "action": [{
+                        "type": "healthChange",
+                        "amount": -5
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "Ouch."
+                    }], 
+                    "afterOptionText": "Damn."
+                },
+                {
+                    "restriction": [{
+                        "stats": "staStat",
+                        "amount": 800
+                    }],
+                    "text": "Defend yourself",
+                    "action": [{}],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text":  "You blocked the shot, barely getting any damage from it."
+                    }], 
+                    "afterOptionText": "Whew."
+                }
+            ]
         }
+
     ]
 }

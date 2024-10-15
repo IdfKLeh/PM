@@ -41,6 +41,71 @@
                 "amount":-5
             }]
 
+        },
+        {
+            "enemyID":"lycaon",
+            "enemyName":"Wild Wolf",
+            "homeLevel":1,
+            "visibleLevel":[1,2,3],
+            "stat":{
+                "phyStat":300,
+                "intStat":300,
+                "staStat":300,
+                "medStat":300,
+                "speStat":300,
+                "weaStat":200
+            },
+            "weaponType":"broadSword",
+            "weaponID":"rustyBroadSword",
+            "enemySkill":[{
+                "skillName":"Bite",
+                "skillDamage": 5,
+                "skillRate": 0.1 
+            },
+            {
+                "skillName":"Scratch",
+                "skillDamage": 3,
+                "skillRate": 0.2 
+            }],
+            "enemyTrait":[],
+            "enemyDescription":[{
+                "text":"A feral looking wolf."
+            },
+            {
+                "restriction":[{
+                    "stats": "intStat",
+                    "amount": 300
+                }],
+                "text":"Its eyes seems like it carries a spot of dreadful grief within the madness in it."
+            },
+            {
+                "restriction":[{
+                    "stats": "intStat",
+                    "amount": 300
+                }],
+                "text":"Its almost like looking inside a human's pupil."
+            }
+            ],
+            "winAction":[{
+                "type":"moneyGet",
+                "amount":50
+            },
+            {
+                "type":"statChange",
+                "stats":"phyStat",
+                "amount":10
+            }],
+            "loseAction":[
+                {
+                    "type":"moneyGet",
+                    "amount":-50
+                },
+                {
+                "type":"statChange",
+                "stats":"phyStat",
+                "amount":-5
+            }]
+
         }
     ]
 }
