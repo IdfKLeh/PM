@@ -114,7 +114,7 @@ public class UserController : MonoBehaviour
                 return 0;
         }
     }//특정 user stat 수치를 반환하는 함수.
-    private int StaminaCalc(int amount){
+    internal int StaminaCalc(int amount){
 
         float minMultiplier = 0.1f;
         float maxMultiplier = 2.0f;
