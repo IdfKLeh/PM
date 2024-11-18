@@ -59,9 +59,22 @@ public class BattleStageEventHandler : MonoBehaviour
         Debug.Log("LogTextCalc called with person:" + person);
         WeaponTextCalc(person);
         //ItemTextCalc(person);
+        /*if(person == "enemy")
+        {
+            SkillTextCalc(person);
+        } 스킬 시스템은 시간이 없을 것 같아서 일단 유기*/
         //SkillTextCalc(person);
     }//순서대로 무기, 아이템, 스킬의 로그를 계산
 
+    void SkillTextCalc(string person)
+    {
+        Debug.Log("SkillTextCalc called with person: " + person);
+        List<Skill> targetSkillData = new List<Skill>();
+        if(person == "enemy")
+        {
+            targetSkillData = enemyController.GetEnemySkillData();
+        }// 제작중인데 enemyContoller.GetEnemySkillData는 enemy의 이름을 반납하지 않고 그냥 스킬 이름만 적어둬서 로그 작성에 문제. 나중에 시간나면 수정할 것.
+    }
     void WeaponTextCalc(string person)
     {
         Debug.Log("WeaponTextCalc called with person: " + person);

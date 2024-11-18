@@ -339,6 +339,140 @@
                     "afterOptionText": "Whew."
                 }
             ]
+        },
+        {
+            "eventID": "AHugeRain",
+            "conditions": "None",
+            "eventType": "Negative",
+            "eventKarma": "Normal",
+            "basicOptionNumber":1,
+            "dialogues": [
+                {
+                    "restriction":[{}],
+                    "text": "You’re walking on a cornfield. Completely happy by the warm sun glaze covering up the whole ground, you have a good feeling about the trip set in front of you. Suddenly, the sky gets covered with dark rain clouds, making the sunny weather few minutes ago feel like a huge lie. A cold drizzle starts, leading to a freezing downpour, accompanied with powerful gusts wind." },
+                {
+                    "restriction":[{
+                        "stats":"medStat",
+                        "amount":300
+                    }],
+                    "text":"The sudden change of the weather seems so odd, as if the sky were mad."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction":[{}],
+                    "text": "Power through",
+                    "action": [{
+                        "type": "moneyGet",
+                        "item": "-25"
+                    },
+                    {
+                        "type": "healthChange",
+                        "amount": -2
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You decided to march through the horrible weather. But it turned out that the coldness was too much for any man, and you got a terrible frostbite on your feet, costing you some gold and health to heal."
+                    }],
+                    "afterOptionText": "Damn."
+                },
+                {
+                    "restriction":[{
+                        "stats":"intStat",
+                        "amount": 250
+                    }],
+                    "text": "Stay at a nearby house.",
+                    "action": [{
+                        "type": "moneyGet",
+                        "amount": -20
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You decided to seek help at a nearby house. Fortunately, there was a tavern close enough to reach before too late. You had a good nights sleep there had headed down the road next day."
+                    }],
+                    "afterOptionText": "Could be worse."
+                },
+                {
+                    "restriction": [{
+                        "stats": "speStat",
+                        "amount": 300
+                    }],
+                    "text": "Try answering the wind god.",
+                    "action": [{}],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You got on your knees, and shouted in a booming voice, in hopes that the wind god Notus will notice. Fortunately the shout reached the ears of the god of southern wind, and he turned back to greet you. You humbly asked him to stop the cold weather, which he kindly accepted."
+                    }],
+                    "afterOptionText": "Could be worse."
+                }
+            ]
+        },
+        {
+            "eventID": "AHugeRain",
+            "conditions": "None",
+            "eventType": "Negative",
+            "eventKarma": "Bad",
+            "basicOptionNumber":1,
+            "dialogues": [
+                {
+                    "restriction":[{}],
+                    "text": "You’re walking on a cornfield. Completely happy by the warm sun glaze covering up the whole ground, you have a good feeling about the trip set in front of you. Suddenly, the sky gets covered with dark rain clouds, making the sunny weather few minutes ago feel like a huge lie. A cold drizzle starts, leading to a freezing downpour, accompanied with powerful gusts wind." },
+                {
+                    "restriction":[{
+                        "stats":"medStat",
+                        "amount":300
+                    }],
+                    "text":"The sudden change of the weather seems so odd, as if the sky were mad."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction":[{}],
+                    "text": "Power through",
+                    "action": [{
+                        "type": "moneyGet",
+                        "amount": -25
+                    },
+                    {
+                        "type": "healthChange",
+                        "amount": -2
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You decided to march through the horrible weather. But it turned out that the coldness was too much for any man, and you got a terrible frostbite on your feet, costing you some gold and health to heal."
+                    }],
+                    "afterOptionText": "Damn."
+                },
+                {
+                    "restriction":[{
+                        "stats":"intStat",
+                        "amount": 250
+                    }],
+                    "text": "Stay at a nearby house.",
+                    "action": [{
+                        "type": "moneyGet",
+                        "amount": -20
+                    }],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You decided to seek help at a nearby house. Fortunately, there was a tavern close enough to reach before too late. You had a good nights sleep there had headed down the road next day."
+                    }],
+                    "afterOptionText": "Could be worse."
+                },
+                {
+                    "restriction": [{
+                        "stats": "speStat",
+                        "amount": 300
+                    }],
+                    "text": "Try answering the wind god.",
+                    "action": [{}],
+                    "afterText": [{
+                        "restriction":[{}],
+                        "text": "You got on your knees, and shouted in a booming voice, in hopes that the wind god Notus will notice. Fortunately the shout reached the ears of the god of southern wind, and he turned back to greet you. You humbly asked him to stop the cold weather, which he kindly accepted."
+                    }],
+                    "afterOptionText": "Could be worse."
+                }
+            ]
         }
     ]
 }

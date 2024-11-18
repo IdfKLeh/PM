@@ -22,7 +22,17 @@ public class EventStageButtonController : MonoBehaviour
     }//옵션과 다이얼로그 세팅
     private void SetEventText(string message)
     {
-        eventStageCanvas.eventStageDialogue.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        // Scroll View의 Content에 있는 TextMeshProUGUI를 가져옵니다.
+        TextMeshProUGUI textComponent = eventStageCanvas.eventStageDialogue
+            .GetComponentInChildren<ScrollRect>() // Scroll View에서
+            .content // Content RectTransform
+            .GetComponentInChildren<TextMeshProUGUI>(); // Content 안의 TextMeshProUGUI
+
+        textComponent.text = message;
+
+        // 텍스트 길이에 따라 크기를 업데이트합니다.
+        Canvas.ForceUpdateCanvases(); // 강제로 레이아웃 갱신
+        LayoutRebuilder.ForceRebuildLayoutImmediate(textComponent.rectTransform);
     }//메시지를 전달 받으면 해당 메시지로 텍스트 설정
     private void SetEventOptions(int numberOfOptions){
         List<Button> buttons = new List<Button>();

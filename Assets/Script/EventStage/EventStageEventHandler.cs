@@ -245,10 +245,13 @@ public class EventStageEventHandler : MonoBehaviour
                     userController.ChangeStat(e.amount,e.stats);
                     break;
                 case "itemGet":
+                    userController.AddItem(e.item);
                     break;
                 case "healthChange":
+                    userController.AddCurrentHealth(e.amount);
                     break;
-                case "moneyChange":
+                case "moneyGet":
+                    userController.AddMoney(e.amount);
                     break;
                 default:
                     Debug.Log("Unknown type of action"+e.type);

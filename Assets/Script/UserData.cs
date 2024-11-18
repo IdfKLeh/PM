@@ -125,6 +125,15 @@ public class UserData
     }
 
     [SerializeField]
+    private List<string> NormalItemInventory; // 소지품 목록
+    public List<string> normalItemInventory
+    {
+        get { return NormalItemInventory; }
+        set { NormalItemInventory = value; }
+    }
+
+
+    [SerializeField]
     private List<string> NextEnemy; // 다음 예정된 적
     public List<string> nextEnemy
     {

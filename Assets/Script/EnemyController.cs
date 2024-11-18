@@ -153,6 +153,19 @@ public class EnemyController : MonoBehaviour
         return enemyName;
     }//enemyData에 저장된 데이터에서 enemyName들을 가져오는 함수
 
+    public List<Skill> GetEnemySkillData()
+    {
+        List<Skill> enemySkill = new List<Skill>();
+        foreach (EnemyData enemy in enemyData)
+        {
+            foreach(Skill enemySkillData in enemy.enemySkill)
+            {
+                enemySkill.Add(enemySkillData);
+            }
+        }
+        return enemySkill;
+    }//각 적의 각 스킬에 대한 정보를 가져오는 함수
+
     public List<Action> GetWinAction()
     {
         List<Action> winAction = new List<Action>();

@@ -378,7 +378,7 @@ public class UserController : MonoBehaviour
         return (int)Math.Round((double)(userData.medStat * GameBalance.maxHealthMultiplier));
     }//medStat을 기반으로 최대 체력을 계산하는 함수.
 
-    public void ApplyMaxHealthChange()
+    private void ApplyMaxHealthChange()
     {
         int healthDifference = userData.maxHealth - MaxHealthCalc();
         if(healthDifference != 0)
@@ -438,4 +438,15 @@ public class UserController : MonoBehaviour
             AddCurrentHealth(-losingHealth);
         }
     }//전투 패배시 intStat에 따라 체력이 깎이는 비율을 조정하고, 이에 따라 체력을 깎는 함수.
+
+    public void AddItem(string itemID)
+    {
+        userData.normalItemInventory.Add(itemID);
+    }
+
+    public void RemoveItem(string itemID)
+    {
+        userData.normalItemInventory.Remove(itemID);
+    }//위의 두 함수는 아이템을 추가하고, 제거하는 함수.
+
 }
