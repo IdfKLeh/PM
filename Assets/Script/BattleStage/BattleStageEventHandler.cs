@@ -370,8 +370,18 @@ public class BattleStageEventHandler : MonoBehaviour
     {
         for(int i = 0; i < battleLogInOrder.Count; i++)
         {
-            string exampleLog = battleLogInOrder[i].attacker + ": " + battleLogInOrder[i].amountOfDamage + " " + battleLogInOrder[i].typeOfDamage + " with " + battleLogInOrder[i].weaponName+"!"; 
-            battleLogToShow.Add(exampleLog,damagePercentageAfterCalculationList[i]);
+            string exampleLog = battleLogInOrder[i].attacker + ": " + battleLogInOrder[i].amountOfDamage + " " + battleLogInOrder[i].typeOfDamage + " with " + battleLogInOrder[i].weaponName+"!";
+
+            // 동일한 키가 있으면 고유한 숫자 인덱스를 추가
+            int uniqueCounter = 1;
+            string uniqueLog = exampleLog;
+            while (battleLogToShow.ContainsKey(uniqueLog))
+            {
+                uniqueLog = $"{exampleLog} ({uniqueCounter})";
+                uniqueCounter++;
+            }
+
+            battleLogToShow.Add(uniqueLog, damagePercentageAfterCalculationList[i]);
             Debug.Log(exampleLog);
         }
     }//BattleStageButtonController에서 사용할 수 있도록 battleLogToShow에 저장.
@@ -427,6 +437,11 @@ public class BattleStageEventHandler : MonoBehaviour
                 if(action.type == "itemGet")
                 {
                     //여기에 아이템 추가하는 코드 추가
+                }
+                if(action.type == "gameOver")
+                {
+                    userController.SetCurrentHealth(0);
+                    resultText.Add("You lost all your health and the game is over.");
                 }
             }
         }

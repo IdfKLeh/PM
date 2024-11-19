@@ -23,6 +23,8 @@ public class AmountText
 public class WeaponText
 {
     public List<string> broadSword {get; set;}
+    public List<string> dagger {get; set;}
+    public List<string> fist {get; set;}
 }
 
 public class BattleTextWrapper

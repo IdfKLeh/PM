@@ -68,7 +68,10 @@ public class BattleTextController : MonoBehaviour
         {
             var weaponTextMap = new Dictionary<string, List<string>>()
             {
-                { "broadSword", battleText.weaponText.broadSword }
+                { "broadSword", battleText.weaponText.broadSword },
+                { "dagger", battleText.weaponText.dagger },
+                { "fist", battleText.weaponText.fist }
+                
                 // Add other weapon types here
             };
 

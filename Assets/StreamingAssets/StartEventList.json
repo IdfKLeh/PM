@@ -82,8 +82,8 @@
             ],
             "allOptions": [
                 {
-                    "optionText": "Rusty Pistol",
-                    "action": "Weapon Pistol"
+                    "optionText": "Bare Fist",
+                    "action": "Weapon Fist"
                 },
                 {
                     "optionText": "Rusty Broadsword",

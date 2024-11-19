@@ -275,8 +275,8 @@ public class StartEventEventHandler : MonoBehaviour
                     case "Weapon Dagger":
                         weaponList.Add("rustyDagger");
                         break;
-                    case "Weapon Pistol":
-                        weaponList.Add("rustyPistol");
+                    case "Weapon Fist":
+                        weaponList.Add("bareFist");
                         break; 
                 }
                 userController.SetMainWeapon(weaponList);

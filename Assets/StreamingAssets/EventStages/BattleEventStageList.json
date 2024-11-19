@@ -473,6 +473,113 @@
                     "afterOptionText": "Could be worse."
                 }
             ]
+        },
+        {
+            "eventID": "ACorpseParty",
+            "conditions": "None",
+            "eventType": "Negative",
+            "eventKarma": "Normal",
+            "basicOptionNumber": 2,
+            "dialogues": [
+                {
+                    "restriction": [
+                        {}
+                    ],
+                    "text": "After a long battle, you move your tired body towards the road ahead. After some time, you come across a quite huge village, with the people welcoming you. They invite you to an annual festival, treating you with a lot of meat and wine."
+                },
+                {
+                    "restriction": [
+                        {
+                            "stats": "intStat",
+                            "amount": 300
+                        }
+                    ],
+                    "text": "The villagers seem very kind, maybe a tad bit too much."
+                }
+            ],
+            "allOptions": [
+                {
+                    "restriction": [
+                        {}
+                    ],
+                    "text": "Follow the invitation",
+                    "action": [
+                        {
+                            "type": "healthChange",
+                            "amount": 10
+                        },
+                        {
+                            "type": "statChange",
+                            "stats": "medStat",
+                            "amount": -20
+                        }
+                    ],
+                    "afterText": [
+                        {
+                            "restriction": [
+                                {}
+                            ],
+                            "text": "You follow their suggestion, stuffing yourself with huge amounts of food and drinks. Hey, its not everyday you get free nutrients!"
+                        }
+                    ],
+                    "afterOptionText": "Yay!"
+                },
+                {
+                    "restriction": [
+                        {}
+                    ],
+                    "text": "Decline the offer",
+                    "action": [
+                        {
+                            "type": "healthChange",
+                            "amount": -5
+                        },
+                        {
+                            "type": "statChange",
+                            "stats": "medStat",
+                            "amount": 20
+                        }
+                    ],
+                    "afterText": [
+                        {
+                            "restriction": [
+                                {}
+                            ],
+                            "text": "The people seem a bit too friendly. You decide its suspicious, and kindly decline the offer. At that moment, the ambience suddenly changes. The people are no longer laughing, and start to try to drag you to the festival. You manage to quickly run away, but get a few scratches and bruises here and there in the run."
+                        }
+                    ],
+                    "afterOptionText": "Probably for the best."
+                },
+                {
+                    "restriction": [
+                        {
+                            "stats": "intStat",
+                            "amount": 500
+                        }
+                    ],
+                    "text": "Play dumb",
+                    "action": [
+                        {
+                            "type": "statChange",
+                            "stats": "medStat",
+                            "amount": 20
+                        },
+                        {
+                            "type": "healthChange",
+                            "amount": 10
+                        }
+                    ],
+                    "afterText": [
+                        {
+                            "restriction": [
+                                {}
+                            ],
+                            "text": "You decide the group has a some fishy smell, and choose follow them and find out what it is. You act as if enjoying the food and goods, and secretly go out the back trying to get to the bottom of this mess. It turns out that they were burning people for the gods favor, and the food was made from the unclean process. Outraged, you play dumb enough to get close to the festival’s leader, and as you were trying to put a knife in his throat, the temples roof came down with a large noise. Zeus blah blah"
+                        }
+                    ],
+                    "afterOptionText": "Nice."
+                }
+            ]
         }
     ]
 }

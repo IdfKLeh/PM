@@ -16,6 +16,7 @@ public class MainPlayEventHandler : MonoBehaviour
         userController.LoadData();
         if(userController.GetNextEnemy() == null)
             userController.SetRandomNextEnemy();
+        CheckIfGameOver();
     }//시작할 때 기존 userData를 로드함.
 
     public void ExecuteTrainingAction(string buttonName)
@@ -64,5 +65,20 @@ public class MainPlayEventHandler : MonoBehaviour
         else if(stageKind == "BattleSelection")
             SceneManager.LoadScene("BattleStage");
         
+    }
+
+    public void CheckIfGameOver()
+    {
+        if(userController.GetCurrentHealth() <= 0)
+        {
+            mainPlayButtonController.OpenGameOver();
+        }
+    }
+
+    public void EndGameAction()
+    {
+        userController.NewGame();
+        userController.SaveData();
+        SceneManager.LoadScene("MainMenu");
     }
 }

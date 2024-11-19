@@ -111,6 +111,16 @@ public class MainPlayButtonController : MonoBehaviour
         mainPlayCanvas.popUpWindow.messageText.text = message;
     }//popup여는 함수
 
+    public void OpenGameOver()
+    {
+        mainPlayCanvas.popUpWindow.gameObject.SetActive(true);
+        mainPlayCanvas.popUpWindow.yesButton.onClick.RemoveAllListeners();
+        mainPlayCanvas.popUpWindow.noButton.onClick.RemoveAllListeners();
+        mainPlayCanvas.popUpWindow.yesButton.onClick.AddListener(() => OnYesButtonClicked("GameOverButton","MainStuff"));
+        mainPlayCanvas.popUpWindow.noButton.onClick.AddListener(() => OnYesButtonClicked("GameOverButton", "MainStuff"));
+        mainPlayCanvas.popUpWindow.messageText.text = "Your health is 0. Game Over!";
+    }//게임오버 팝업을 여는 함수.
+
     private void OnYesButtonClicked(string buttonName, string groupName)
     {
         mainPlayCanvas.popUpWindow.gameObject.SetActive(false);
@@ -124,6 +134,9 @@ public class MainPlayButtonController : MonoBehaviour
                 {
                     case "BattleButton":
                         mainPlayEventHandler.ExecuteBattleAction();
+                        break;
+                    case "GameOverButton":
+                        mainPlayEventHandler.EndGameAction();
                         break;
                 }
                 break;

@@ -398,9 +398,9 @@ public class UserController : MonoBehaviour
         userData.currentHealth += amount;
     }
 
-    public void GetCurrentHealth()
+    public int GetCurrentHealth()
     {
-        userData.currentHealth = userData.maxHealth;
+       return userData.currentHealth;
     }//currentHealth를 설정하고, 더하고, 반환하는 함수.
 
     public string GetCurrentEvent()

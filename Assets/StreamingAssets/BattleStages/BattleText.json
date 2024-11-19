@@ -11,7 +11,9 @@
             "largest":["Life Threatning","World Ending"]
         },
         "weaponText":{
-            "broadSword":["Slash","Push","Cut","Stab","Pierce","Impale","Cleave","Chop","Hack","Swing","Strike","Thrust","Lunge","Sweep","Smash","Bash","Crush","Bludgeon","Spank","Paddle"]
+            "broadSword":["Slash","Push","Cut","Stab","Pierce","Impale","Cleave","Chop","Hack","Swing","Strike","Thrust","Lunge","Sweep","Smash","Bash","Crush","Bludgeon","Spank","Paddle"],
+            "dagger":["Stab","Pierce","Impale","Cut","Slash","Thrust","Lunge","Jab","Poke"],
+            "fist":["Punch","Slap","Kick","Elbow","Headbutt","Knee","Bite","Scratch"]
         }
     }
 }
