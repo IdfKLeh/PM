@@ -9,7 +9,7 @@ public class MainPlayEventHandler : MonoBehaviour
     private MainPlayButtonController mainPlayButtonController;
     private UserController userController;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         mainPlayButtonController = FindObjectOfType<MainPlayButtonController>();
         userController = FindObjectOfType<UserController>();

@@ -8,7 +8,6 @@ using EventStageEventNameSpace;
 public class EnemyController : MonoBehaviour
 {
     private List<EnemyData> enemyData = new List<EnemyData>();
-    private UserController userController;
     private Dictionary<string, EnemyData> enemyDict = new Dictionary<string, EnemyData>();
 
 
@@ -153,17 +152,17 @@ public class EnemyController : MonoBehaviour
         return enemyName;
     }//enemyData에 저장된 데이터에서 enemyName들을 가져오는 함수
 
-    public List<Skill> GetEnemySkillData()
+    public List<(string, Skill)> GetEnemySkillData()
     {
-        List<Skill> enemySkill = new List<Skill>();
+        List<(string, Skill)> enemySkillDataList = new List<(string, Skill)>();
         foreach (EnemyData enemy in enemyData)
         {
-            foreach(Skill enemySkillData in enemy.enemySkill)
+            foreach (Skill enemySkill in enemy.enemySkill)
             {
-                enemySkill.Add(enemySkillData);
+                enemySkillDataList.Add((enemy.enemyName, enemySkill));
             }
         }
-        return enemySkill;
+        return enemySkillDataList;
     }//각 적의 각 스킬에 대한 정보를 가져오는 함수
 
     public List<Action> GetWinAction()
@@ -185,6 +184,16 @@ public class EnemyController : MonoBehaviour
         }
         return loseAction;
     }//enemyData에 저장된 데이터에서 loseAction들을 가져오는 함수
+
+    public List<int> GetEnemyMedStat()
+    {
+        List<int> enemyMedStat = new List<int>();
+        foreach (EnemyData enemy in enemyData)
+        {
+            enemyMedStat.Add(enemy.stat.medStat);
+        }
+        return enemyMedStat;
+    }//enemyData에 저장된 데이터에서 medStat들을 가져오는 함수
 
     
 

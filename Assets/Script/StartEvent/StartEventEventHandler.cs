@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using UnityEditor;
 using StartEventNameSpace;
+using UnityEngine.SceneManagement;
 
 public class StartEventEventHandler : MonoBehaviour
 {
@@ -334,7 +334,12 @@ public class StartEventEventHandler : MonoBehaviour
         return currentEvent.stage == maxStage;
     }//현재 이벤트의 스테이지가 가장 높은 스테이지인지 확인하는 함수. 이벤트가 전환되기 전에 확인해야겠지?
 
-    
+    public void EndStartEvent(string targetlevel)
+    {
+        userController.SetStageBefore("StartEvent", "Neutral");
+        userController.SaveData();
+        SceneManager.LoadScene(targetlevel);
+    }
 }
 
 [System.Serializable]

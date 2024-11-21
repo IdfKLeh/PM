@@ -23,6 +23,7 @@ public class UserController : MonoBehaviour
     }
 
     public void NewGame(){
+        userData = new UserData();
         userData.phyStat = 200;
         userData.intStat = 200;
         userData.staStat = 200;
@@ -270,7 +271,7 @@ public class UserController : MonoBehaviour
                 karma = "Bad";
             }
         }
-        Debug.Log("Current Karma: " + karma);
+        //Debug.Log("Current Karma: " + karma);
         return karma;
     }//카르마 값을 세개의 선택지(Good, Normal, Bad) 중에 뽑아서 반환하는 함수
 
@@ -448,5 +449,10 @@ public class UserController : MonoBehaviour
     {
         userData.normalItemInventory.Remove(itemID);
     }//위의 두 함수는 아이템을 추가하고, 제거하는 함수.
+
+    public string LoadGameSceneInfoFunc()
+    {
+        return userData.stageBeforeInfo.stageKind;
+    }//LoadGameSceneInfoFunc는 userData에 저장된 이전 스테이지 정보를 반환하는 함수.
 
 }

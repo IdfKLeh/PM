@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public class MainMenuButtonController : MonoBehaviour
 {
     [SerializeField] private MainMenuCanvas mainMenuCanvas; //creating Canvas instance
+    private UserController userController;
 
     private void Awake()
     {   
@@ -15,6 +16,7 @@ public class MainMenuButtonController : MonoBehaviour
         mainMenuCanvas.loadGameButton.onClick.AddListener(() => onButtonClicked("LoadGame"));
         mainMenuCanvas.settingsButton.onClick.AddListener(() => onButtonClicked("Settings"));
         mainMenuCanvas.quitButton.onClick.AddListener(() => onButtonClicked("Quit"));
+        userController = FindObjectOfType<UserController>();
 
     }//시작시에 각 버튼들에 리스너 추가
     private void onButtonClicked(string operType)
@@ -25,7 +27,7 @@ public class MainMenuButtonController : MonoBehaviour
                 openPopUpWindow("Are You Sure?(Save Files will be replaced!)", operType);
                 break;
             case "LoadGame":
-                
+                openPopUpWindow("Are You Sure?", operType);
                 break;
             case "Settings":
                 
@@ -60,8 +62,34 @@ public class MainMenuButtonController : MonoBehaviour
                 mainMenuCanvas.popUpWindow.gameObject.SetActive(false);
                 sceneChange("StartEvent");
                 break;
+            case "LoadGame":
+                mainMenuCanvas.popUpWindow.gameObject.SetActive(false);
+                userController.LoadData();
+                string sceneBefore = userController.LoadGameSceneInfoFunc();
+                switch (sceneBefore)
+                {
+                    case "StartEvent":
+                        sceneChange("MainPlay");
+                        break;
+                    case "TrainingStage":
+                        sceneChange("EventStage");
+                        break;
+                    case "BattleSelection":
+                        sceneChange("BattleStage");
+                        break;
+                    case "BattleStage":
+                        sceneChange("EventStage");
+                        break;
+                    case "EventStage":
+                        sceneChange("MainPlay");
+                        break;
+                    default:
+                        sceneChange("StartEvent");
+                        break;
+                }
+                break;
             case "Quit":
-                UnityEditor.EditorApplication.isPlaying = false;// 빌드 파일에선 해당 코드 없애기
+                //UnityEditor.EditorApplication.isPlaying = false;// 빌드 파일에선 해당 코드 없애기
                 Application.Quit();
                 break;
             default:
@@ -78,6 +106,9 @@ public class MainMenuButtonController : MonoBehaviour
         switch (operType)
         {
             case "NewGame":
+                mainMenuCanvas.popUpWindow.gameObject.SetActive(false);
+                break;
+            case "LoadGame":
                 mainMenuCanvas.popUpWindow.gameObject.SetActive(false);
                 break;
             case "Quit":

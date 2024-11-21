@@ -17,7 +17,7 @@ public class EventStageEventHandler : MonoBehaviour
     private string currentEventStageIDForLoading;//로딩을 위해 필요한 경우 현재 이벤트 스테이지의 ID를 저장하는 변수
     public List<int> passedOptionIndexes = new List<int>();//옵션 중 무엇이 표시되는지 번호를 저장해놓는 리스트
     private string targetAfterStage; //보통의 경우 MainPlay로 가야하지만 보스 스테이지 등의 특수 상황의 경우 어디로 갈지 목적지를 적어두는 변수
-    void Awake()
+    void Start()
     {
         userController = FindObjectOfType<UserController>();
         stageBefore = userController.GetStageBefore();
@@ -105,6 +105,7 @@ public class EventStageEventHandler : MonoBehaviour
         }
         currentEvent = gameEvent;
         userController.SetCurrentEvent(currentEvent.eventID);//로딩을 위해 현재 이벤트 스테이지의 ID를 저장
+        userController.SaveData();
         Debug.Log("Current event set: " + currentEvent.eventID);
     }//대상 EventStageEvent를 currentEvent로 설정하는 함수
 
@@ -258,9 +259,9 @@ public class EventStageEventHandler : MonoBehaviour
                     break;
             }
         }
-        userController.SaveData();
         userController.EmptyCurrentEvent();
-        
+        userController.SetStageBefore("EventStage", "Neutral");
+        userController.SaveData();
     }//action 실행 함수. **이건 나중 아이디어, 만약 후에 또 다른 이벤트로 이어지는 이벤트를 만들거라면, 액션의 종류를 "eventChange" 이런 걸로 넣어서 다른 이벤트로 연결되도록 설정.
 
     public string GetEventAfterDialogue(int selectedOptionIndex){

@@ -143,6 +143,7 @@ public class KarmaTests
         // medStat = 200, referenceMedStat = 300
         // minPossibility = 0.05, refPossibility = 0.2
         float expected = Mathf.Lerp(0.05f, 0.2f, (float)200 / 300) * 100;
+        Debug.Log("Expected: " + expected+ " Result: "+result);
         Assert.AreEqual(expected, result, 0.01f, "Possibility should be correctly calculated for stats below the reference.");
     }//reference 값보다 낮은 medStat일 때의 PossibilityCalc 테스트
 
@@ -161,6 +162,7 @@ public class KarmaTests
         // minPossibility = -0.4, maxPossibility = 0.3, refPossibility = 0.0
         float t = (400f - 300f) / (1000f - 300f);
         float expected = (Mathf.Lerp(0.0f, 0.3f, t) + 0.5f) * 100;
+        Debug.Log("Expected: " + expected + " Result: " + result);
         Assert.AreEqual(expected, result, 0.01f, "Possibility should be correctly calculated for stats above the reference.");
     }//reference 값보다 높은 speStat일 때의 PossibilityCalc 테스트
 
@@ -178,6 +180,7 @@ public class KarmaTests
 
         // Assert
         float expected = 0.2f * 100; // refPossibility is used directly
+        Debug.Log("Expected: " + expected + " Result: " + result);
         Assert.AreEqual(expected, result, 0.01f, "Possibility should match the reference value when stat equals reference.");
     }//reference 값과 같은 medStat일 때의 PossibilityCalc 테스트
 
@@ -195,6 +198,7 @@ public class KarmaTests
 
         // Assert
         float expected = (-0.4f + 0.5f) * 100; // minPossibility + 0.5
+        Debug.Log("Expected: " + expected + " Result: " + result);
         Assert.AreEqual(expected, result, 0.01f, "Possibility should match the minimum value when stat is zero.");
     }//0인 medStat일 때의 PossibilityCalc 테스트
 
@@ -212,6 +216,7 @@ public class KarmaTests
 
         // Assert
         float expected = (0.3f + 0.5f) * 100; // maxPossibility + 0.5
+        Debug.Log("Expected: " + expected + " Result: " + result); 
         Assert.AreEqual(expected, result, 0.01f, "Possibility should match the maximum value when stat equals maxStat.");
     }//maxMedStat인 medStat일 때의 PossibilityCalc 테스트
 
@@ -249,9 +254,9 @@ public class KarmaTests
         }
 
         // 출력으로 각 결과의 비율 확인
-        Debug.Log($"Good: {goodCount / (float)iterations * 100}%");
-        Debug.Log($"Normal: {normalCount / (float)iterations * 100}%");
-        Debug.Log($"Bad: {badCount / (float)iterations * 100}%");
+        Debug.Log($"Good: {goodCount / (float)iterations * 100}% expectations: 25%");
+        Debug.Log($"Normal: {normalCount / (float)iterations * 100}% expectations: 50%");
+        Debug.Log($"Bad: {badCount / (float)iterations * 100}% expectations: 25%");
 
         // 각 결과의 비율이 예상 확률과 근사하는지 확인
         Assert.AreEqual(25f, (goodCount / (float)iterations * 100),5f, "Good 비율이 25%가 아닙니다.");
@@ -343,6 +348,7 @@ public class GameFunctionsTests
         }
 
         float successRateAchieved = (float)successCount / iterations * 100;
+        Debug.Log("Success rate achieved: " + successRateAchieved);
 
         // Assert
         Assert.That(successRateAchieved, Is.InRange(45, 55), 

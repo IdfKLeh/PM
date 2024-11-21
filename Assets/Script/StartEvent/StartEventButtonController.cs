@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
+
 using TMPro;
 
 
@@ -140,6 +140,6 @@ public class StartEventButtonController : MonoBehaviour
 
     private void SceneChange(string targetLevel)//function for Scene Change through button clicks
     {
-        SceneManager.LoadScene(targetLevel);
-    }
+        startEventEventHandler.EndStartEvent(targetLevel);
+    }//scene 전환 함수
 }

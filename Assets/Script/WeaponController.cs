@@ -97,7 +97,7 @@ public class WeaponController : MonoBehaviour
         {
             Debug.Log("Friend Weapon Data: " + friendWeaponData[0].weaponName);
         }
-        catch (System.ArgumentOutOfRangeException e)
+        catch
         {
             Debug.LogError("Friend Weapon Data is empty");
 

@@ -59,22 +59,51 @@ public class BattleStageEventHandler : MonoBehaviour
         Debug.Log("LogTextCalc called with person:" + person);
         WeaponTextCalc(person);
         //ItemTextCalc(person);
-        /*if(person == "enemy")
+        if(person == "enemy")
         {
             SkillTextCalc(person);
-        } 스킬 시스템은 시간이 없을 것 같아서 일단 유기*/
+        }
         //SkillTextCalc(person);
     }//순서대로 무기, 아이템, 스킬의 로그를 계산
 
     void SkillTextCalc(string person)
     {
         Debug.Log("SkillTextCalc called with person: " + person);
-        List<Skill> targetSkillData = new List<Skill>();
+        List<(string,Skill)> targetSkillData = new List<(string, Skill)>();
+        List<int> enemyMedStat = enemyController.GetEnemyMedStat();
+        int didEnemyChangeCounter = 0;
         if(person == "enemy")
         {
             targetSkillData = enemyController.GetEnemySkillData();
         }// 제작중인데 enemyContoller.GetEnemySkillData는 enemy의 이름을 반납하지 않고 그냥 스킬 이름만 적어둬서 로그 작성에 문제. 나중에 시간나면 수정할 것.
-    }
+
+        for (int i = 0; i < targetSkillData.Count; i++)
+        {
+            string enemyName = targetSkillData[i].Item1;
+            Skill skill = targetSkillData[i].Item2;
+            if(GameFunctions.IsSuccessful(skill.skillRate*enemyMedStat[didEnemyChangeCounter]))
+            {
+                BattleLogData skillHitData;
+                switch(person)
+                {
+                    case "enemy":
+                        skillHitData = new BattleLogData(enemyName,"Foe", null, "Skill", skill.skillName, skill.skillDamage);
+                        enemyBattleLogDataList.Add(skillHitData);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if(i < targetSkillData.Count-1)
+            {
+                if(enemyName != targetSkillData[i+1].Item1)
+                {
+                    didEnemyChangeCounter++;
+                }
+            }
+        }
+    }//스킬을 사용한 hit의 text들을 계산하여 battleLogDataList에 저장.
+    //근데 함수 너무 거지같다.. didEnemyChangeCounter를 쓰는게 맞는건지도 모르겠음. 나중에 더 나은 방법을 찾아야할듯.
     void WeaponTextCalc(string person)
     {
         Debug.Log("WeaponTextCalc called with person: " + person);
@@ -370,8 +399,16 @@ public class BattleStageEventHandler : MonoBehaviour
     {
         for(int i = 0; i < battleLogInOrder.Count; i++)
         {
-            string exampleLog = battleLogInOrder[i].attacker + ": " + battleLogInOrder[i].amountOfDamage + " " + battleLogInOrder[i].typeOfDamage + " with " + battleLogInOrder[i].weaponName+"!";
-
+            string exampleLog;
+            if(battleLogInOrder[i].typeOfDamage == "Skill")
+            {
+                exampleLog = battleLogInOrder[i].attacker + " used " + battleLogInOrder[i].amountOfDamage+" " + battleLogInOrder[i].weaponName + "!";
+            }
+            else
+            {
+                exampleLog = battleLogInOrder[i].attacker + ": " + battleLogInOrder[i].amountOfDamage + " " + battleLogInOrder[i].typeOfDamage + " with " + battleLogInOrder[i].weaponName + "!";
+            }
+            
             // 동일한 키가 있으면 고유한 숫자 인덱스를 추가
             int uniqueCounter = 1;
             string uniqueLog = exampleLog;
@@ -446,14 +483,21 @@ public class BattleStageEventHandler : MonoBehaviour
             }
         }
 
-        if(userController.GetStageCounter() < 10){
+        /*if(userController.GetStageCounter() < 10){
             userController.SetNextEnemy(enemyController.GetRandomEnemyID("EnemyList.json",userController.GetLevelCounter(),1,false));//나중에 여길 보고 특정 스테이지부터 1마리가 아니라 여러마리를 소환해야하는 경우 1을 바꾸는 옵션 넣을것
         }
         else
         {
             userController.SetNextEnemy(enemyController.GetRandomEnemyID("BossList.json",userController.GetLevelCounter(),1,true));
         }//다음 적을 정하는 코드. 현재 스테이지가 10보다 작으면 일반 적을, 10이상이면 보스를 소환.
-        
+        //아무래도 이건 MainPlay로 옮기는게 좋을 듯. 왜냐하면 MainPlay에서 Training을 했을 시에도 다음에 만나는 적을 변경해야하기 때문.
+        //마찬가지로 bossList에서 불러오는 코드도 충돌이 나기 쉬워서 일단은 제외하겠음.
+        */
+
+        userController.SetNextEnemy(enemyController.GetRandomEnemyID("EnemyList.json", userController.GetLevelCounter(), 1, false));
+        //임시로 추가해놓은 코드. 제대로 enemy리셋하는 거랑 보스 시스템 추가하면 제거 할 것.
+
+
         userController.SaveData();
 
 

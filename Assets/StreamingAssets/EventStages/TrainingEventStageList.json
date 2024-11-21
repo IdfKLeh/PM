@@ -96,12 +96,26 @@
             ],
             "allOptions": [
                 {
-                    "restriction":[{}],
+                    "restriction": [
+                        {}
+                    ],
                     "text": "Defeat the bear with the boy!",
-                    "action": [{
-                        "type": "battleStart",
-                        "stats": "callisto"
-                    }]
+                    "action": [
+                        {
+                            "type": "statChange",
+                            "stats": "phyStat",
+                            "amount": 20
+                        }
+                    ],
+                    "afterText": [
+                        {
+                            "restriction": [
+                                {}
+                            ],
+                            "text": "You decided to help the boy defeat the bear. The bear was no match for the two of you, and you managed to defeat it. The boy thanked you deeply. You feel much stronger after the fight."
+                        }
+                    ],
+                    "afterOptionText": "Yay!"
                 },
                 {
                     "restriction":[{}],
@@ -361,9 +375,15 @@
                     "restriction":[{}],
                     "text": "Defeat the bear with the boy!",
                     "action": [{
-                        "type": "battleStart",
-                        "stats": "callisto"
-                    }]
+                        "type": "statChange",
+                        "stats": "phyStat",
+                        "amount": 20
+                    }],
+                    "afterText":[{
+                        "restriction":[{}],
+                        "text": "You decided to help the boy defeat the bear. The bear was no match for the two of you, and you managed to defeat it. The boy thanked you deeply. You feel much stronger after the fight."
+                    }],
+                    "afterOptionText": "Yay!"
                 },
                 {
                     "restriction":[{}],
