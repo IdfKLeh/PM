@@ -26,16 +26,30 @@ public class StaminaCalcTests
 
         // NewGame() 호출 후 userData가 제대로 초기화되었는지 확인
         Assert.AreEqual(200, userController.GetStatValue("phyStat"), "phyStat 초기화 실패");
+        if(userController.GetStatValue("phyStat") == 200)
+            Debug.Log("phyStat normally initialized");
         Assert.AreEqual(200, userController.GetStatValue("intStat"), "intStat 초기화 실패");
+        if (userController.GetStatValue("intStat") == 200)
+            Debug.Log("intStat normally initialized");
         Assert.AreEqual(200, userController.GetStatValue("staStat"), "staStat 초기화 실패");
+        if (userController.GetStatValue("staStat") == 200)
+            Debug.Log("staStat normally initialized");
         Assert.AreEqual(200, userController.GetStatValue("speStat"), "speStat 초기화 실패");
+        if (userController.GetStatValue("speStat") == 200)
+            Debug.Log("speStat normally initialized");
         Assert.AreEqual(200, userController.GetStatValue("medStat"), "medStat 초기화 실패");
+        if (userController.GetStatValue("medStat") == 200)
+            Debug.Log("medStat normally initialized");
         Assert.AreEqual(200, userController.GetStatValue("weaStat"), "weaStat 초기화 실패");
+        if (userController.GetStatValue("weaStat") == 200)
+            Debug.Log("weaStat normally initialized");
         
 
         // SaveData() 호출 후 save파일이 제대로 생성되었는지 확인
         userController.SaveData();
         Assert.IsTrue(System.IO.File.Exists(Path.Combine(Application.persistentDataPath, "Save","userData.json")), "SaveData() 호출 실패");
+        if (System.IO.File.Exists(Path.Combine(Application.persistentDataPath, "Save", "userData.json")))
+            Debug.Log("Data saved successfully");
     }//newgame, savegame, getstatvalue 테스트
 
     [Test]
@@ -46,9 +60,13 @@ public class StaminaCalcTests
 
         userController.ChangeStat(50, "phyStat");
         Assert.AreEqual(250, userController.GetStatValue("phyStat"), "phyStat 증가 실패");
+        if (userController.GetStatValue("phyStat") == 250)
+            Debug.Log("phyStat increased successfully. Current value: " + userController.GetStatValue("phyStat"));
 
         userController.ChangeStat(-50, "intStat");
         Assert.AreEqual(150, userController.GetStatValue("intStat"), "intStat 감소 실패");
+        if (userController.GetStatValue("intStat") == 150)
+            Debug.Log("intStat decreased successfully. Current value: " + userController.GetStatValue("intStat"));
     }//changestat 테스트
 
 
@@ -69,6 +87,8 @@ public class StaminaCalcTests
         int expectedAmount = Mathf.RoundToInt(amount * expectedMultiplier);
 
         Assert.AreEqual(expectedAmount, result, "Stamina 계산이 예상 값과 일치하지 않습니다.");
+        if(result == expectedAmount)
+            Debug.Log("increasement calculated successfully. Expected value: " + expectedAmount + " Result: " + result);
     }//미리 지정된 reference 값(300)보다 staStat이 낮을 때(150)의 StaminaCalc 테스트
 
     [Test]
@@ -87,6 +107,8 @@ public class StaminaCalcTests
         int expectedAmount = Mathf.RoundToInt(amount * expectedMultiplier);
 
         Assert.AreEqual(expectedAmount, result, "Stamina 계산이 예상 값과 일치하지 않습니다.");
+        if (result == expectedAmount)
+            Debug.Log("increasement calculated successfully. Expected value: " + expectedAmount + " Result: " + result);
     }//미리 지정된 reference 값보다 staStat이 높을 때(650)의 StaminaCalc 테스트
 
     [Test]
@@ -98,6 +120,8 @@ public class StaminaCalcTests
         int result = userController.StaminaCalc(amount);
 
         Assert.AreEqual(amount, result, "Stamina가 기준값일 때, 결과는 변경되지 않아야 합니다.");
+        if (result == amount)
+            Debug.Log("Stamina is at reference value. Expected value: " + amount+ " Result: " + result);
     }//미리 지정된 reference 값과 staStat이 같을 때(300)의 StaminaCalc 테스트
 
     [Test]
@@ -109,7 +133,12 @@ public class StaminaCalcTests
         userController.StaminaCalcChangeStat("intStat");
         //intStat을 증가시키는 함수 호출
 
+        if(userController.GetStatValue("intStat") > 200)
+            Debug.Log("intStat increased succesfully. Current value: " + userController.GetStatValue("intStat"));
+
         Assert.AreEqual(userController.GetStatValue("intStat"), 200+userController.StaminaCalc(8), "Stamina 계산이 예상 값과 일치하지 않습니다.");
+        if(userController.GetStatValue("intStat") == 200 + userController.StaminaCalc(8))
+            Debug.Log("Expected intStat value: " + (200 + userController.StaminaCalc(8)) + " Result: " + userController.GetStatValue("intStat"));
     }//StaminaCalcChangeStat로 phyStat을 증가한 뒤, 증가 값이 제대로 반영되었는지 확인
 
 
@@ -315,6 +344,9 @@ public class GameFunctionsTests
 
         // Assert
         Assert.IsFalse(result, "With a 0% success rate, the result should always be false.");
+        if(result == false)
+            Debug.Log("0% success rate. Result: false");
+        
     }//성공확률이 0%일 때 항상 실패하는지 확인
 
     [Test]
@@ -328,6 +360,8 @@ public class GameFunctionsTests
 
         // Assert
         Assert.IsTrue(result, "With a 100% success rate, the result should always be true.");
+        if(result == true)
+            Debug.Log("100% success rate. Result: true");
     }// 성공확률이 100%일 때 항상 성공하는지 확인
 
     [Test]
